@@ -8,25 +8,21 @@
 }
 
 canvas{
-border: 3px solid black;
+border: 1px solid green;
 position: relative;
 z-index: 20;
-
 
 }
 
 .container-mid{
   display:inline-block;
-    width: 40%; 
+   width: 640px; 
     margin: 0 auto; 
     background: black; 
     position:relative; 
-    border:5px solid black; 
-    border-radius: 10px; 
     box-shadow: 0 5px 50px #333;
     align-items: center;
-
-    height: 50%;
+    height: 400px; 
 
     overflow: hidden;
 }
@@ -37,8 +33,7 @@ z-index: 20;
   align-items: center;
 }
 .container-mid img{
-
   height: 100%;
-  width: 100%;
-  object-fit: contain;
+  width: 100%; 
+/*   object-fit: contain; */
 }
