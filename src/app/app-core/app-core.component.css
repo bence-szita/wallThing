@@ -1,0 +1,44 @@
+.coveredImage{
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  position: absolute;
+}
+
+canvas{
+border: 3px solid black;
+position: relative;
+z-index: 20;
+
+
+}
+
+.container-mid{
+  display:inline-block;
+    width: 40%; 
+    margin: 0 auto; 
+    background: black; 
+    position:relative; 
+    border:5px solid black; 
+    border-radius: 10px; 
+    box-shadow: 0 5px 50px #333;
+    align-items: center;
+
+    height: 50%;
+
+    overflow: hidden;
+}
+
+.center-wrapper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-mid img{
+
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
