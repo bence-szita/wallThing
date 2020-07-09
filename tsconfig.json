@@ -15,6 +15,15 @@
     },
     {
       "path": "./e2e/tsconfig.json"
+    },
+    {
+      "path": "./projects/appCore/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/appCore/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/appCore/e2e/tsconfig.json"
     }
 ]
 }
