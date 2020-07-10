@@ -25,7 +25,7 @@ export class AppCoreComponent implements OnInit{
   imageHeight: number= 300;
 
   ngOnInit() {
-    this.framed_img.src = "/assets/images/goldberg-small.jpg";
+    this.framed_img.src = "assets/images/goldberg-small.jpg";
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
     const canvasID = document.getElementById('stage');
     /* var canvasRect = this.ctx.canvas.getBoundingClientRect() */
