@@ -32,16 +32,12 @@ export class AppCoreComponent implements OnInit{
 
     this.canvasWidth = this.ctx.canvas.clientWidth;
     this.canvasHeight = this.ctx.canvas.clientHeight;
-    this.currentX = this.ctx.canvas.clientWidth/2;
-    this.currentY = this.ctx.canvas.clientHeight/2
+    this.currentX = 100;
+    this.currentY = 200;
 
 
 
     console.log("width: ", this.canvasWidth, "height: " , this.canvasHeight);
-
-
-    this.ctx.fillStyle = "#D74022";
-    this.ctx.fillRect(0, 0, 50, 50);  
 
     this.framed_img.onload = () => {
       // context.drawImage(framed_img, currentX-(framed_img.width/2), currentY-(framed_img.height/2), framed_img.width*imgScale.value, framed_img.height*imgScale.value);
