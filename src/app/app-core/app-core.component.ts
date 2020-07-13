@@ -26,6 +26,7 @@ export class AppCoreComponent implements OnInit{
   imagePosY: number;
   cursorPosOnImageX: number;
   cursorPosOnImageY: number;
+  imageZoom: number;
   
 
   ngOnInit() {
@@ -36,16 +37,7 @@ export class AppCoreComponent implements OnInit{
 
     this.canvasWidth = this.ctx.canvas.clientWidth;
     this.canvasHeight = this.ctx.canvas.clientHeight;
-
-/*     this.imagePosX = this.canvasWidth/2 - this.imageWidth/2;
-    this.imagePosY = this.canvasHeight/2 - this.imageHeight/2;
-
-    this.currentX = this.imagePosX;
-    this.currentY = this.imagePosY; */
-
-
-  
-
+    this.imageZoom = 0.5;
 
     this.framed_img.onload = () => {
       // context.drawImage(framed_img, currentX-(framed_img.width/2), currentY-(framed_img.height/2), framed_img.width*imgScale.value, framed_img.height*imgScale.value);
@@ -95,14 +87,6 @@ export class AppCoreComponent implements OnInit{
     this.currentX = Math.ceil(e.pageX - canvasRect.x - this.cursorPosOnImageX);
     this.currentY = Math.ceil(e.pageY - canvasRect.y - this.cursorPosOnImageY);
 
-    console.log("pagex", e.pageX)
-    console.log("canvasreactx", canvasRect.x)
-    console.log("imgwidth", this.imageWidth)
-    console.log("cursononimagex", this.cursorPosOnImageX)
-
-
-
-    console.log(this.currentX);
   
       this.ResetCanvas()
       this._drawImage(this.framed_img);
@@ -113,15 +97,11 @@ export class AppCoreComponent implements OnInit{
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
       var mouseX = Math.floor(e.changedTouches[0].pageX - canvasRect.x);
       var mouseY = Math.floor(e.changedTouches[0].pageY - canvasRect.y);
-      console.log("x: ", mouseX, "y: ", mouseY);
-      console.log("offsetWidth: ", canvasRect.x, "height: ",canvasRect.y);
 
      /*  if ( mousex > ) */
      this.cursorPosOnImageX = mouseX-this.currentX;
      this.cursorPosOnImageY = mouseY-this.currentY;
 
-     console.log("cursor on img", this.cursorPosOnImageX)
-     console.log("img width", this.imageWidth)
 
      if ((this.cursorPosOnImageX <= this.imageWidth ) &&
      (this.cursorPosOnImageX > 0) &&
@@ -130,10 +110,7 @@ export class AppCoreComponent implements OnInit{
           this.isImageMovable = true;
           console.log('touch start')
     }
-
-
    });
-
 
     canvasID.addEventListener('touchmove', (e) => {
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
@@ -162,7 +139,11 @@ export class AppCoreComponent implements OnInit{
     });
    };
 
-
+   modifyZoom(zoomChanger){
+    this.imageZoom += zoomChanger;
+    this.ResetCanvas();
+    this._imgRender();
+   }
   _imgRender(){
   /*   this.mouseEvents();
  */
@@ -175,13 +156,13 @@ export class AppCoreComponent implements OnInit{
   }
 
   modifyImage(newImage){
+    this.ResetCanvas();
     this.framed_img.src = newImage;
 /*     this._drawImage(this.framed_img) */
 
   }
   _drawImage(imageToRender){
-
-    this.ctx.drawImage(imageToRender, this.currentX, this.currentY, this.framed_img.width/2, this.framed_img.height/2);
+    this.ctx.drawImage(imageToRender, this.currentX, this.currentY, this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
   }
 
 

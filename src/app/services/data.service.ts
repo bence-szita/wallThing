@@ -12,4 +12,5 @@ export class DataService {
   getRemoteData(url: string){
     return this.http.get(url)
   }
+
 }

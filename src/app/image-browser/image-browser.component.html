@@ -1,9 +1,21 @@
+<div class="wrapper-header">
 <div class="wrapper-imagebrowser">
 
     <div *ngFor="let image of this.imageList?.results" class="container-imagebrowser" (click)="changeImage($event)">
       
       <img src="{{image.urls.small}}" alt="">
     
-  </div>
+    </div>
 
+</div>
+
+<div>
+      <button type="button" mat-raised-button (click)="increaseZoom($event)">+
+    </button>
+
+
+      <button type="button" mat-raised-button (click)="decreaseZoom($event)">-
+      </button>
+
+</div>
 </div>
