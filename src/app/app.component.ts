@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppCoreComponent } from './app-core/app-core.component';
@@ -11,4 +11,7 @@ import { AppCoreComponent } from './app-core/app-core.component';
 })
 export class AppComponent {
   title = 'wallThing';
+
+
+ /* s */
 }

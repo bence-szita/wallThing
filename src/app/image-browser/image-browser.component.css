@@ -1,0 +1,29 @@
+.wrapper-imagebrowser{
+  max-width: 600px;
+  height: 200px;
+  border: 1px solid red;
+
+  display: flex;
+
+  overflow: scroll;
+  align-items: center;
+  align-content: center;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 30px;
+}
+
+.container-imagebrowser{
+  height: 90%;
+
+/*   display: flex;
+  overflow: scroll; */
+}
+
+.container-imagebrowser img{
+  height: 100%;
+  margin: 10px
+
+/*   display: flex;
+  overflow: scroll; */
+}

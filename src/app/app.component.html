@@ -1,7 +1,8 @@
 
 
-<header>wallThing</header>
-<app-core></app-core>
+
+<app-image-browser (newImage)="main.modifyImage($event)" ></app-image-browser>
+<app-core #main></app-core>
 
 
 <router-outlet></router-outlet>

@@ -1,0 +1,9 @@
+<div class="wrapper-imagebrowser">
+
+    <div *ngFor="let image of this.imageList?.results" class="container-imagebrowser" (click)="changeImage($event)">
+      
+      <img src="{{image.urls.small}}" alt="">
+    
+  </div>
+
+</div>

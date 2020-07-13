@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, Directive,
 import { NgModule } from '@angular/core';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
-
 @Component({
   selector: 'app-core',
   templateUrl: './app-core.component.html',
@@ -30,7 +29,7 @@ export class AppCoreComponent implements OnInit{
   
 
   ngOnInit() {
-    this.framed_img.src = "assets/images/goldberg-small.jpg";
+    this.framed_img.src = "https://images.unsplash.com/photo-1557218825-334e575bcc38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEzOTE3OH0";
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
     const canvasID = document.getElementById('stage');
     /* var canvasRect = this.ctx.canvas.getBoundingClientRect() */
@@ -38,11 +37,11 @@ export class AppCoreComponent implements OnInit{
     this.canvasWidth = this.ctx.canvas.clientWidth;
     this.canvasHeight = this.ctx.canvas.clientHeight;
 
-    this.imagePosX = this.canvasWidth/2 - this.imageWidth/2;
+/*     this.imagePosX = this.canvasWidth/2 - this.imageWidth/2;
     this.imagePosY = this.canvasHeight/2 - this.imageHeight/2;
 
     this.currentX = this.imagePosX;
-    this.currentY = this.imagePosY;
+    this.currentY = this.imagePosY; */
 
 
   
@@ -50,6 +49,15 @@ export class AppCoreComponent implements OnInit{
 
     this.framed_img.onload = () => {
       // context.drawImage(framed_img, currentX-(framed_img.width/2), currentY-(framed_img.height/2), framed_img.width*imgScale.value, framed_img.height*imgScale.value);
+      this.imagePosX = this.canvasWidth/2 - this.framed_img.width/2;
+      this.imagePosY = this.canvasHeight/2 - this.framed_img.height/2;
+
+      this.currentX = this.imagePosX;
+      this.currentY = this.imagePosY;
+      this.imageWidth = this.framed_img.width;
+      this.imageHeight = this.framed_img.height;
+
+
       this._imgRender();
     }
     
@@ -78,9 +86,6 @@ export class AppCoreComponent implements OnInit{
               console.log('touch start')
      }
 
-
-
-
    }); 
 
    canvasID.addEventListener('mousemove', (e) => {
@@ -100,9 +105,9 @@ export class AppCoreComponent implements OnInit{
     console.log(this.currentX);
   
       this.ResetCanvas()
-      this._drawImage();
+      this._drawImage(this.framed_img);
     }
-    });
+  });
 
     canvasID.addEventListener('touchstart', (e) => {
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
@@ -138,7 +143,7 @@ export class AppCoreComponent implements OnInit{
        this.currentY = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImageY);
        
          this.ResetCanvas()
-         this._drawImage();
+         this._drawImage(this.framed_img);
        }
     });
 
@@ -155,64 +160,29 @@ export class AppCoreComponent implements OnInit{
     this.isImageMovable = false;
 
     });
-
-
-   
-
-
    };
 
-  
 
   _imgRender(){
   /*   this.mouseEvents();
  */
-    this._drawImage()
+    this._drawImage(this.framed_img)
   }
 
 
   ResetCanvas() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
   }
-  /* mouseEvents(){
 
-    this.ctx.onmousedown = function(e) {
+  modifyImage(newImage){
+    this.framed_img.src = newImage;
+/*     this._drawImage(this.framed_img) */
 
-      var mouseX = e.pageX - this.parentNode.parentNode.offsetLeft;
-      var mouseY = e.pageY - this.parentNode.parentNode.offsetTop;
-
-      if (mouseX >= (currentX - framed_img.width/2) &&
-          mouseX <= (currentX + framed_img.width/2) &&
-          mouseY >= (currentY - framed_img.height/2) &&
-          mouseY <= (currentY + framed_img.height/2)) {
-        isDraggable = true;
-      }
-  };
-
-  canvas.onmousemove = function(e) {
-    if (isDraggable) {
-      currentX = e.pageX - this.parentNode.parentNode.offsetLeft;
-      currentY = e.pageY - this.parentNode.parentNode.offsetTop;
-      _ResetCanvas();
-      _DrawImage();
-    }
-
-  };
-
-  canvas.onmouseup = function(e) {
-    isDraggable = false;
-  };
-  canvas.onmouseout = function(e) {
-    isDraggable = false;
-  };
-
-  } */
-
-  _drawImage(){
-
-    this.ctx.drawImage(this.framed_img, this.currentX, this.currentY, 200, 300);
   }
+  _drawImage(imageToRender){
 
+    this.ctx.drawImage(imageToRender, this.currentX, this.currentY, this.framed_img.width/2, this.framed_img.height/2);
+  }
 
 
   constructor() {
