@@ -14,7 +14,6 @@ z-index: 20;
 
 width: auto;
 height: 100%;
-
 }
 
 .container-mid{
@@ -27,9 +26,7 @@ height: 100%;
   position:relative; 
   box-shadow: 0 5px 50px #333;
   align-items: center;
-    /* height: auto;  */
-/* 
-    overflow: hidden; */
+
 }
 
 .center-wrapper{

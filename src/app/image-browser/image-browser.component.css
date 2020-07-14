@@ -1,16 +1,15 @@
 .wrapper-imagebrowser{
   max-width: 600px;
   height: 200px;
-
   display: flex;
-
   overflow-x: scroll;
   overflow-y: hidden;
   align-items: center;
   align-content: center;
-/*   margin-right: auto;
-  margin-left: auto; */
   margin-bottom: 30px;
+/*      margin-right: auto;
+  margin-left: auto; */ 
+
 }
 
 .container-imagebrowser{
@@ -25,16 +24,18 @@
   overflow: scroll; */
 }
 
-.wrapper-header{
+.wrapper-buttons{
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: auto;
-  margin-left: auto;
+/*   margin-right: auto;
+  margin-left: auto; */
+
+
+
 }
 
 button{
-
   display: block;
   background-color: #f7f7f7;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
@@ -43,10 +44,10 @@ button{
   background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7); 
   background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7); 
   color: gray;
-  margin: 36px;
+  margin-top: 20px;
   width: 40px;
   height: 40px;
-  position: relative;
+
   text-align: center;
   line-height: 4px;
   border-radius: 50%;
@@ -54,3 +55,9 @@ button{
 
   font-size: 35px;
 }
+
+
+.buttons{
+  margin: 36px;
+}
+
