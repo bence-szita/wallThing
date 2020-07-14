@@ -36,7 +36,7 @@ export class AppCoreComponent implements OnInit{
   
 
   ngOnInit() {
-    this.background_img.src = "../assets/images/pictureonwall-small.jpg";
+    this.background_img.src = "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80";
     this.framed_img.src = "https://images.unsplash.com/photo-1557218825-334e575bcc38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEzOTE3OH0";
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
     const canvasID = document.getElementById('stage');
