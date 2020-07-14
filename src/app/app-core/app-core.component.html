@@ -3,10 +3,13 @@
         <!-- Wrapper for middle of the screen -->
  <div class="container-mid container-artpicker-main">
 
-          <img src="assets/images/wall-default-medium.jpg" class="coveredImage"  style="width: 100%">
+          <img #background src={{background_img.src}} class="coveredImage" >
           <!-- <canvas class="coveringCanvas"></canvas> -->
 
-          <canvas #canvas id="stage" width="638" height="398"></canvas>
+          <canvas #canvas width={{backgroundWidth}} height={{backgroundHeight}} id="stage"></canvas>
+          
 
   </div>
+
+  <p>{{this.mySize}}</p>
 </div>

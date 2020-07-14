@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, Directive, HostListener  } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, Directive, HostListener, AfterViewInit  } from '@angular/core';
 import { NgModule } from '@angular/core';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-core',
@@ -12,9 +12,12 @@ export class AppCoreComponent implements OnInit{
 
   @ViewChild('canvas', {static: true})
   canvas: ElementRef;
+
+  @ViewChild('background') background : ElementRef;
  /*  @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>; */
   public ctx: CanvasRenderingContext2D;
   public framed_img = new Image();
+  public background_img = new Image();
   canvasWidth : number;
   canvasHeight : number;
   isImageMovable: boolean= false;
@@ -27,28 +30,50 @@ export class AppCoreComponent implements OnInit{
   cursorPosOnImageX: number;
   cursorPosOnImageY: number;
   imageZoom: number;
+  mySize: number;
+  backgroundWidth: number;
+  backgroundHeight: number;
   
 
   ngOnInit() {
+    this.background_img.src = "/assets/images/pictureonwall-small.jpg";
     this.framed_img.src = "https://images.unsplash.com/photo-1557218825-334e575bcc38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEzOTE3OH0";
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
     const canvasID = document.getElementById('stage');
-    /* var canvasRect = this.ctx.canvas.getBoundingClientRect() */
+    console.log(this.background);/* var canvasRect = this.ctx.canvas.getBoundingClientRect() */
+    console.log(this.canvas);
+/*     this.ctx.canvas.width= this.background_img.width;
+    this.ctx.canvas.height= this.background_img.height; */
 
-    this.canvasWidth = this.ctx.canvas.clientWidth;
-    this.canvasHeight = this.ctx.canvas.clientHeight;
     this.imageZoom = 0.5;
+
+
+    this.background_img.onload = () => {
+      console.log("ezt", this.background.nativeElement.clientWidth);
+      console.log("ezt", this.background.nativeElement.scrollWidth);
+      this.backgroundWidth = this.background.nativeElement.width;
+      this.backgroundHeight = this.background.nativeElement.height;
+      
+
+    }
+
 
     this.framed_img.onload = () => {
       // context.drawImage(framed_img, currentX-(framed_img.width/2), currentY-(framed_img.height/2), framed_img.width*imgScale.value, framed_img.height*imgScale.value);
       this.imagePosX = this.canvasWidth/2 - this.framed_img.width/2;
       this.imagePosY = this.canvasHeight/2 - this.framed_img.height/2;
 
+/*      this.ctx.canvas.width =  this.framed_img.width;
+      
+      this.ctx.canvas.height=  this.framed_img.height; */
+
+      this.canvasWidth = this.ctx.canvas.clientWidth;
+      this.canvasHeight = this.ctx.canvas.clientHeight;
+
       this.currentX = this.imagePosX;
       this.currentY = this.imagePosY;
       this.imageWidth = this.framed_img.width;
       this.imageHeight = this.framed_img.height;
-
 
       this._imgRender();
     }
