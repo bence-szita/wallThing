@@ -54,12 +54,14 @@ button{
   text-align: center;
   border-radius: 50%;
   box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
-
   font-size: 20px; */
   margin: 5px;
   height: 30px;
 } 
 
+button :disabled{
+opacity: 20%;
+  } 
 
 .buttons .pager-buttons{
   margin: 5px;
@@ -68,6 +70,7 @@ button{
 .pager-buttons{
 margin-right: 20px;
 margin-left: 30px;
+display: flex;
 }
 
 .browser-header{
@@ -78,6 +81,10 @@ margin-left: 30px;
   align-content: center;
   align-items: center;
   justify-content: center;  */
+max-width: 700px;
+margin-right: auto;
+margin-left: auto;
+
 }
 
 .searchbar{
@@ -87,6 +94,8 @@ margin-left: 30px;
   margin-top: auto;
   margin-bottom: auto;
   max-height: 25px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 
@@ -94,6 +103,10 @@ margin-left: 30px;
   display: flex;
   align-content: flex-end;
   align-items: center;
+}
+
+.searchInput{
+  max-width: 50px;
 }
 
 

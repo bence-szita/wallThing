@@ -12,7 +12,6 @@ export class ImageBrowserComponent implements OnInit {
   @Output() newImage = new EventEmitter<object>();
   @Output() zoomChange = new EventEmitter<number>();
 
-  searchInputForGallery : string;
   APIKEY : string;
   url : string;
   queryUrl : string;
@@ -45,11 +44,11 @@ export class ImageBrowserComponent implements OnInit {
 
 
   constructor( private dataService: DataService) {
-    this.searchString = 'gorilla';
+    this.searchString = 'abstract';
     this.APIKEY = "mo0EDOofA6crGOy5UROfCFEJjrJvLUcwAQMJg-mqsBQ";  
     this.url = "https://api.unsplash.com/search/photos?page=1&query=gorilla&client_id=mo0EDOofA6crGOy5UROfCFEJjrJvLUcwAQMJg-mqsBQ";
     this.pageNum = 1;
-    this.queryUrl = "https://api.unsplash.com/search/photos?page=" + this.pageNum + "&query=" + this.searchInputForGallery + "&client_id=" + this.APIKEY;
+    this.queryUrl = "https://api.unsplash.com/search/photos?page=" + this.pageNum + "&query=" + this.searchString + "&client_id=" + this.APIKEY;
   }
 
 

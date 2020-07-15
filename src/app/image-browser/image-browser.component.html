@@ -1,23 +1,27 @@
 <div class="browser-header">
-  <div class="searchbar">
-    <input type="text" placeholder="search" [(ngModel)]="searchString">
-    <button class="searchbutton" type="button" mat-raised-button (click)="updateGallery()">Search
-    </button>
+    <div class="searchbar">
 
-    <div class="pager-buttons" >
-      <button type="button" (click)="previousPage()"> Previous Page
-    </button>
-      <button type="button" (click)="nextPage()"> Next Page
-      </button>
+        <input class="searchInput" type="text" placeholder="search" [(ngModel)]="searchString">
+        <button class="searchbutton" type="button" mat-raised-button (click)="updateGallery()">Search
+        </button>
+
+      <div class="pager-buttons" >
+          <button type="button" [disabled]="pageNum === 1" (click)="previousPage()"> Previous
+        </button>
+          <button type="button" (click)="nextPage()"> Next
+          </button>
+      </div>
     </div>
-</div>
 
-  <div class="buttons zoomButtons">
-    <button type="button" mat-raised-button (click)="increaseZoom($event)"> +
-  </button>
-    <button type="button" mat-raised-button (click)="decreaseZoom($event)">-
-    </button>
-  </div>
+    <div class="buttons zoomButtons">
+
+      <button type="button" mat-raised-button (click)="decreaseZoom($event)">-
+      </button>
+
+        <button type="button" mat-raised-button (click)="increaseZoom($event)"> +
+      </button>
+
+    </div>
 </div>
 
 
