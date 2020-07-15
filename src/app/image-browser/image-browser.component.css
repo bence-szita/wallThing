@@ -111,6 +111,6 @@ margin-left: auto;
 
 
 .highlight{
-  opacity: 100% !important;
+  opacity: 1 !important;
   border: 2px solid black;
  }
