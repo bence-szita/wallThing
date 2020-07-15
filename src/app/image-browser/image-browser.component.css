@@ -1,14 +1,14 @@
 .wrapper-imagebrowser{
-  max-width: 600px;
-  height: 200px;
+  max-width: 700px;
+  height: 130px;
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
   align-items: center;
   align-content: center;
   margin-bottom: 30px;
-/*      margin-right: auto;
-  margin-left: auto; */ 
+  margin-right: auto;
+  margin-left: auto;  
 
 }
 
@@ -36,7 +36,7 @@
 }
 
 button{
-  display: block;
+/*   display: block;
   background-color: #f7f7f7;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
   background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7); 
@@ -45,19 +45,37 @@ button{
   background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7); 
   color: gray;
   margin-top: 20px;
-  width: 40px;
-  height: 40px;
-
+  width: 20px;
+  height: 20px;
+  padding: 0;
   text-align: center;
-  line-height: 4px;
   border-radius: 50%;
   box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
 
-  font-size: 35px;
+  font-size: 20px; */
+  margin: 5px;
+} 
+
+
+.buttons .pager-buttons{
+  margin: 5px;
 }
 
+.pager-buttons{
+  margin-left: 100px;
+  margin-right: 100px;
+}
 
-.buttons{
-  margin: 36px;
+.browser-header{
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchbutton{
+  
 }
 

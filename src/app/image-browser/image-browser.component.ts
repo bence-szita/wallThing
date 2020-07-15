@@ -18,23 +18,25 @@ export class ImageBrowserComponent implements OnInit {
   queryUrl : string;
   imageList: any;
   private appCore: AppCoreComponent;
+  searchString : string;
+  pageNum : number;
 
 
   changeImage(e){
-    console.log(e.target.src);
+
     /* this.appCore._drawImage(e.target.src); */
     this.newImage.emit(e.target.src)
   }
 
   increaseZoom(e){
-    console.log("increase");
+
     /* this.appCore._drawImage(e.target.src); */
     this.zoomChange.emit(+0.05)
     
   }
 
   decreaseZoom(e){
-    console.log("derease");
+
     /* this.appCore._drawImage(e.target.src); */
     this.zoomChange.emit(-0.05);
   }
@@ -42,23 +44,37 @@ export class ImageBrowserComponent implements OnInit {
 
 
   constructor( private dataService: DataService) {
-    this.searchInputForGallery = 'festival';
+    this.searchString = 'gorilla';
     this.APIKEY = "mo0EDOofA6crGOy5UROfCFEJjrJvLUcwAQMJg-mqsBQ";  
     this.url = "https://api.unsplash.com/search/photos?page=1&query=gorilla&client_id=mo0EDOofA6crGOy5UROfCFEJjrJvLUcwAQMJg-mqsBQ";
-    this.queryUrl = "https://api.unsplash.com/search/photos?page=1&query=" + this.searchInputForGallery + "&client_id=" + this.APIKEY;
+    this.pageNum = 1;
+    this.queryUrl = "https://api.unsplash.com/search/photos?page=" + this.pageNum + "&query=" + this.searchInputForGallery + "&client_id=" + this.APIKEY;
   }
 
 
   ngOnInit() {
-    this.dataService.getRemoteData(this.queryUrl).subscribe(data => {
-      this.imageList = data;
-
-    });
-
-
+    this.updateGallery();
   }
 
+  updateGallery(){
+    this.fillGallery( this.pageNum , this.searchString, this.APIKEY);
+  }
+  fillGallery( _page, _searchinput, _apikey){
+    this.queryUrl = "https://api.unsplash.com/search/photos?page=" + _page + "&query=" + _searchinput + "&client_id=" + _apikey;
+    this.dataService.getRemoteData(this.queryUrl).subscribe(data => {
+      this.imageList = data;
+  });
+  }
 
+  nextPage(){
+    this.pageNum += 1;
+    this.fillGallery( this.pageNum, this.searchString, this.APIKEY);
+  }
+  previousPage(){
+    this.pageNum -= 1;
+    this.fillGallery( this.pageNum, this.searchString, this.APIKEY);
+  }
+  
   
   
 

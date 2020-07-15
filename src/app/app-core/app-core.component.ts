@@ -33,7 +33,7 @@ export class AppCoreComponent implements OnInit{
   mySize: number;
   backgroundWidth: number;
   backgroundHeight: number;
-  
+
 
   ngOnInit() {
     this.background_img.src = "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80";
