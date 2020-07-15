@@ -19,7 +19,7 @@
 .container-imagebrowser img{
   max-height: 90%;
   margin: 10px;
-  opacity: 50%;
+  opacity: 0.5;
   display: flex;
   align-items: center;
   align-content: center;
