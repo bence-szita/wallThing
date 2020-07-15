@@ -4,21 +4,26 @@
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
-  align-items: center;
+  align-items: top;
   align-content: center;
   margin-bottom: 30px;
   margin-right: auto;
   margin-left: auto;  
-
 }
 
 .container-imagebrowser{
-  height: 90%;
+  height: 85%;
+  
 }
 
 .container-imagebrowser img{
-  height: 100%;
-  margin: 10px
+  max-height: 90%;
+  margin: 10px;
+  opacity: 50%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+
 
 /*   display: flex;
   overflow: scroll; */
@@ -79,3 +84,8 @@ button{
   
 }
 
+
+.highlight{
+  opacity: 100% !important;
+  border: 2px solid black;
+ }

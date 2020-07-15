@@ -20,6 +20,7 @@ export class ImageBrowserComponent implements OnInit {
   private appCore: AppCoreComponent;
   searchString : string;
   pageNum : number;
+  selectedIndex : number;
 
 
   changeImage(e){
@@ -60,6 +61,7 @@ export class ImageBrowserComponent implements OnInit {
     this.fillGallery( this.pageNum , this.searchString, this.APIKEY);
   }
   fillGallery( _page, _searchinput, _apikey){
+    this.selectedIndex = null;
     this.queryUrl = "https://api.unsplash.com/search/photos?page=" + _page + "&query=" + _searchinput + "&client_id=" + _apikey;
     this.dataService.getRemoteData(this.queryUrl).subscribe(data => {
       this.imageList = data;
@@ -75,7 +77,11 @@ export class ImageBrowserComponent implements OnInit {
     this.fillGallery( this.pageNum, this.searchString, this.APIKEY);
   }
   
-  
+  public highlightImage(_index: number) {
+    this.selectedIndex = _index;
+    console.log(_index);
+    console.log(this.selectedIndex);
+  }
   
 
 }
