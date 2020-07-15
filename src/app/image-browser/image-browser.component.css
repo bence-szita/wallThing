@@ -84,7 +84,6 @@ display: flex;
 max-width: 700px;
 margin-right: auto;
 margin-left: auto;
-
 }
 
 .searchbar{
@@ -98,7 +97,6 @@ margin-left: auto;
   margin-left: 5px;
 }
 
-
 .zoomButtons{
   display: flex;
   align-content: flex-end;
@@ -111,6 +109,6 @@ margin-left: auto;
 
 
 .highlight{
-  opacity: 1.0 !important;
+  opacity: 1 !important;
   border: 2px solid black;
  }
