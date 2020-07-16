@@ -119,25 +119,30 @@ export class AppCoreComponent implements OnInit{
       var mouseX = Math.floor(e.changedTouches[0].pageX - canvasRect.x);
       var mouseY = Math.floor(e.changedTouches[0].pageY - canvasRect.y);
 
-     /*  if ( mousex > ) */
-     this.cursorPosOnImageX = mouseX-this.currentX;
-     this.cursorPosOnImageY = mouseY-this.currentY;
-
-
-     if ((this.cursorPosOnImageX <= this.framed_img.width ) &&
-     (this.cursorPosOnImageX > 0) &&
-     (this.cursorPosOnImageY <= this.framed_img.height) &&
-     (this.cursorPosOnImageY > 0) ) {
-          this.isImageMovable = true;
+    this.cursorPosOnImageX = -1*(this.imageCenterPosition[0] - mouseX);
+    this.cursorPosOnImageY = this.imageCenterPosition[1] - mouseY;
+ 
+     console.log(this.currentX);
+    if ((this.cursorPosOnImageX <= this.actualFramedImgSize[0]*0.5) &&
+         (this.cursorPosOnImageX >= this.actualFramedImgSize[0]*-0.5) &&
+         (this.cursorPosOnImageY <= this.actualFramedImgSize[1]*0.5) &&
+         (this.cursorPosOnImageY >= this.actualFramedImgSize[1]*-0.5) 
+        ) {
+             this.isImageMovable = true;
+             console.log('touch start')
     }
+
+
+
    });
 
     canvasID.addEventListener('touchmove', (e) => {
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
       if (this.isImageMovable){
        var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
-       this.currentX = Math.ceil(e.changedTouches[0].pageX - canvasRect.x - this.cursorPosOnImageX);
-       this.currentY = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImageY);
+       this.imageCenterPosition[0] = Math.ceil(e.changedTouches[0].pageX - canvasRect.x - this.cursorPosOnImageX);
+       this.imageCenterPosition[1] = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImageY);
+
        
          this.ResetCanvas()
          this._drawImage(this.framed_img);
