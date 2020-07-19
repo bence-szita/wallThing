@@ -1,8 +1,9 @@
 
 
 
-<app-image-browser (newImage)="main.modifyImage($event)" (zoomChange)="main.modifyZoom($event)"></app-image-browser>
+<app-image-browser (newImage)="main.modifyImage($event)" (zoomChange)="main.modifyZoom($event)" ></app-image-browser>
 <app-core #main></app-core>
+<app-image-upload (newBackground)="main.modifyBackGround($event)"></app-image-upload>
 
 
 <router-outlet></router-outlet>

@@ -37,6 +37,7 @@ export class AppCoreComponent implements OnInit{
   actualFramedImgSize: Array<number>;
   imageCenterPosition: Array<number>;
   isImageRendered: boolean = false;
+  newBackground = new Image();
 
 
   ngOnInit() {
@@ -49,8 +50,10 @@ export class AppCoreComponent implements OnInit{
     this.background_img.onload = () => {
       this.backgroundWidth = this.background.nativeElement.width;
       this.backgroundHeight = this.background.nativeElement.height;
-    }
+      this.getCanvasSize();
 
+     console.log("bgload", this.imageCenterPosition);
+    }
   
 
     this.framed_img.onload = () => {
@@ -66,8 +69,6 @@ export class AppCoreComponent implements OnInit{
       this.isImageRendered = true;
     }
     console.log("after init img center",this.imageCenterPosition ,this.canvasWidth/2 ,this.canvasHeight/2);
-    
-
     
      /*  this._imgRender(); */
     }
@@ -215,6 +216,18 @@ export class AppCoreComponent implements OnInit{
     console.log('ide draw', this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2, this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2 );
   }
 
+  getCanvasSize(){
+    this.canvasWidth = this.background.nativeElement.width;
+   this.canvasHeight = this.background.nativeElement.height;
+   this.imageCenterPosition = [this.canvasWidth/2,this.canvasHeight/2];
+   
+   console.log("canvasload", this.imageCenterPosition);
+  }
+
+  modifyBackGround(_newBackground){
+    this.background_img.src = _newBackground;
+
+  }
 
   constructor() {
    

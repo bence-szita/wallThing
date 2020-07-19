@@ -1,0 +1,16 @@
+.custom-bg-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+
+}
+
+.custom-bg-wrapper input {
+
+  margin-left: 10px;
+  
+  
+}

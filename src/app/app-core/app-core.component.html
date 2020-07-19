@@ -6,10 +6,15 @@
           <img #background src={{background_img.src}} class="coveredImage" >
           <!-- <canvas class="coveringCanvas"></canvas> -->
 
-          <canvas #canvas width={{backgroundWidth}} height={{backgroundHeight}} id="stage"></canvas>
+          <canvas #canvas width={{backgroundWidth}} onload="getCanvasSize()" height={{backgroundHeight}} id="stage"></canvas>
           
 
   </div>
 
-  <p>{{this.mySize}}</p>
+
+  
+
+
+
+
 </div>
