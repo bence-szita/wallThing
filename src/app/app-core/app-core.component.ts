@@ -38,6 +38,13 @@ export class AppCoreComponent implements OnInit{
   imageCenterPosition: Array<number>;
   isImageRendered: boolean = false;
   newBackground = new Image();
+  inp1 : number;
+  inp2 : number;
+  inp3 : number;
+  inp4 : number;
+  inp5 : number;
+  inp6 : number;
+
 
 
   ngOnInit() {
@@ -76,7 +83,6 @@ export class AppCoreComponent implements OnInit{
     
     canvasID.addEventListener('mousedown', (e) => {
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
-
       var mouseX = Math.floor(e.pageX - canvasRect.x);
       var mouseY = Math.floor(e.pageY - canvasRect.y);
 
@@ -194,7 +200,9 @@ export class AppCoreComponent implements OnInit{
   }
 
   ResetCanvas() {
+    this.ctx.rect(0,0,0,0);
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+
   }
 
   modifyImage(newImage){
@@ -204,13 +212,16 @@ export class AppCoreComponent implements OnInit{
 
   }
   _drawImage(imageToRender){
-/* 
+
+/*
     this.currentX = this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2;
     this.currentY = this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2; */
+
     this.ctx.drawImage(imageToRender, this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2,
                                       this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2,
                                       this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
-
+/*     this.drawFrame(event); */
+    
     console.log("after init img center",this.imageCenterPosition ,this.canvasWidth/2 ,this.canvasHeight/2);
     console.log("imd width zoom",this.framed_img.width ,this.imageZoom)
     console.log('ide draw', this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2, this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2 );
@@ -226,8 +237,42 @@ export class AppCoreComponent implements OnInit{
 
   modifyBackGround(_newBackground){
     this.background_img.src = _newBackground;
+  }
+  _drawFrame(){
 
   }
+
+
+  drawFrame(e){
+    this.ResetCanvas();
+    this._drawImage(this.framed_img)
+
+    /* draw frame background */
+    this.ctx.beginPath();
+    if (Math.ceil((e.bgWidth/2))){
+      this.ctx.rect(this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2-Math.ceil((e.bgWidth/2)),
+                  this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2-Math.ceil((e.bgWidth/2)),
+                  this.framed_img.width*this.imageZoom+e.bgWidth, this.framed_img.height*this.imageZoom+e.bgWidth);
+    };
+    this.ctx.lineWidth = e.bgWidth; 
+    this.ctx.strokeStyle = e.bgColor;
+    this.ctx.stroke();
+
+     /* draw background background */
+    this.ctx.beginPath();
+    if (Math.ceil((e.frameWidth/2))){
+    this.ctx.rect(this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2-e.bgWidth-Math.ceil((e.frameWidth/2)),
+                  this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2-e.bgWidth-Math.ceil((e.frameWidth/2)),
+                  this.framed_img.width*this.imageZoom+e.bgWidth*2+e.frameWidth, this.framed_img.height*this.imageZoom+e.bgWidth*2+e.frameWidth);
+
+    };              
+    this.ctx.lineWidth = e.frameWidth; 
+    this.ctx.strokeStyle = e.frameColor;
+    this.ctx.stroke();
+
+    console.log(event)
+  }
+
 
   constructor() {
    

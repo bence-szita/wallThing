@@ -9,7 +9,10 @@ import { AppCoreComponent } from './app-core/app-core.component';
 import { ImageBrowserComponent } from './image-browser/image-browser.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DataService } from './services/data.service';
-import { ImageUploadComponent } from './image-upload/image-upload.component'
+import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { BorderPickerComponent } from './border-picker/border-picker.component'
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -17,12 +20,14 @@ import { ImageUploadComponent } from './image-upload/image-upload.component'
     AppCoreComponent,
     ImageBrowserComponent,
     ImageUploadComponent,
+    BorderPickerComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]
