@@ -11,9 +11,15 @@ header{
 }
 
 .bottom-wrapper{
+  margin-top: 20px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-right: auto;
   margin-left: auto;
+}
+
+app-border-picker{
+  margin-bottom: 20px;
 }

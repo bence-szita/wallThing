@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BorderInfo } from '../border-info'
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-border-picker',
@@ -18,13 +17,21 @@ export class BorderPickerComponent implements OnInit {
   frameWidth: number;
   bgColor: string;
   bgWidth: number;
+  borderToggle: boolean;
 
   @Output() frameInfo = new EventEmitter<{frameColor: string, frameWidth: number, bgColor: string, bgWidth: number}>();
+  @Output() borderOn = new EventEmitter<any>();
 
 
   frameUpdate(){
     this.frameInfo.emit({frameColor: this.frameColor, frameWidth: this.frameWidth, bgColor: this.bgColor, bgWidth: this.bgWidth});
-    console.log("ittvayok")
+  
+  }
+
+  borderToggleUpdate(){
+    this.borderOn.emit(this.borderToggle);
+
+
   }
 
   constructor() {
@@ -32,10 +39,15 @@ export class BorderPickerComponent implements OnInit {
     this.frameWidth = 5;
     this.bgColor = "#ffffff";
     this.bgWidth = 10;
+    this.borderToggle = false;
+    this.frameUpdate();
+    this.borderToggleUpdate();
 
    }
 
   ngOnInit(): void {
+    this.frameUpdate();
+    this.borderToggleUpdate();
   }
 
 }

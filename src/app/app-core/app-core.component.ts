@@ -38,14 +38,11 @@ export class AppCoreComponent implements OnInit{
   imageCenterPosition: Array<number>;
   isImageRendered: boolean = false;
   newBackground = new Image();
-  inp1 : number;
-  inp2 : number;
-  inp3 : number;
-  inp4 : number;
-  inp5 : number;
-  inp6 : number;
-
-
+  frameColor: string;
+  frameWidth: number;
+  bgColor: string;
+  bgWidth: number;
+  borderToggle: boolean;
 
   ngOnInit() {
     this.background_img.src = "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80";
@@ -212,19 +209,19 @@ export class AppCoreComponent implements OnInit{
 
   }
   _drawImage(imageToRender){
-
-/*
-    this.currentX = this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2;
-    this.currentY = this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2; */
-
+    this.ResetCanvas();
     this.ctx.drawImage(imageToRender, this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2,
                                       this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2,
                                       this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
-/*     this.drawFrame(event); */
     
     console.log("after init img center",this.imageCenterPosition ,this.canvasWidth/2 ,this.canvasHeight/2);
     console.log("imd width zoom",this.framed_img.width ,this.imageZoom)
     console.log('ide draw', this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2, this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2 );
+
+
+    if (this.borderToggle){
+      this._drawFrame();
+    }
   }
 
   getCanvasSize(){
@@ -238,39 +235,53 @@ export class AppCoreComponent implements OnInit{
   modifyBackGround(_newBackground){
     this.background_img.src = _newBackground;
   }
-  _drawFrame(){
-
-  }
-
-
-  drawFrame(e){
-    this.ResetCanvas();
-    this._drawImage(this.framed_img)
-
+  _drawFrame(){ 
     /* draw frame background */
     this.ctx.beginPath();
-    if (Math.ceil((e.bgWidth/2))){
-      this.ctx.rect(this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2-Math.ceil((e.bgWidth/2)),
-                  this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2-Math.ceil((e.bgWidth/2)),
-                  this.framed_img.width*this.imageZoom+e.bgWidth, this.framed_img.height*this.imageZoom+e.bgWidth);
+    if (Math.ceil((this.bgWidth/2))){
+      this.ctx.rect(this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2-Math.ceil((this.bgWidth/2)),
+                  this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2-Math.ceil((this.bgWidth/2)),
+                  this.framed_img.width*this.imageZoom+this.bgWidth, this.framed_img.height*this.imageZoom+this.bgWidth);
     };
-    this.ctx.lineWidth = e.bgWidth; 
-    this.ctx.strokeStyle = e.bgColor;
+    this.ctx.lineWidth = this.bgWidth; 
+    this.ctx.strokeStyle = this.bgColor;
     this.ctx.stroke();
 
      /* draw background background */
     this.ctx.beginPath();
-    if (Math.ceil((e.frameWidth/2))){
-    this.ctx.rect(this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2-e.bgWidth-Math.ceil((e.frameWidth/2)),
-                  this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2-e.bgWidth-Math.ceil((e.frameWidth/2)),
-                  this.framed_img.width*this.imageZoom+e.bgWidth*2+e.frameWidth, this.framed_img.height*this.imageZoom+e.bgWidth*2+e.frameWidth);
-
+    if (Math.ceil((this.frameWidth/2))){
+    this.ctx.rect(this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
+                  this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
+                  this.framed_img.width*this.imageZoom+this.bgWidth*2+this.frameWidth, this.framed_img.height*this.imageZoom+this.bgWidth*2+this.frameWidth);
     };              
-    this.ctx.lineWidth = e.frameWidth; 
-    this.ctx.strokeStyle = e.frameColor;
+    this.ctx.lineWidth = this.frameWidth; 
+    this.ctx.strokeStyle = this.frameColor;
     this.ctx.stroke();
 
-    console.log(event)
+  }
+
+  toggleFrame(e){
+    this.borderToggle = e;
+    
+    if (this.imageCenterPosition !== undefined){
+      this._drawImage(this.framed_img);
+    }
+
+
+  }
+
+  drawFrame(e){
+
+    this.frameColor = e.frameColor;
+    this.frameWidth = e.frameWidth;
+    this.bgColor = e.bgColor;
+    this.bgWidth = e.bgWidth;
+    /* console.log("aaa", this.imageCenterPosition[0]); */
+
+    if (this.imageCenterPosition !== undefined){
+      this._drawImage(this.framed_img);
+    }
+
   }
 
 

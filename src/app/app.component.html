@@ -4,8 +4,9 @@
 <app-image-browser (newImage)="main.modifyImage($event)" (zoomChange)="main.modifyZoom($event)" ></app-image-browser>
 <app-core #main></app-core>
 <div class="bottom-wrapper">
+  <app-border-picker (frameInfo)="main.drawFrame($event)" (borderOn)="main.toggleFrame($event)"  ></app-border-picker>
   <app-image-upload (newBackground)="main.modifyBackGround($event)"></app-image-upload>
-  <app-border-picker (frameInfo)="main.drawFrame($event)"></app-border-picker>
+ 
 
 </div>
 
