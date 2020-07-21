@@ -8,5 +8,7 @@ The project was created in Angular and is currently using HTML canvas to freely 
 
 The current picture set is gathered from Unsplash through API querys.
 
+Page hosted in: https://ben-sz.github.io/wallThing/
+
 2020.07.21
 
