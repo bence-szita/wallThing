@@ -1,27 +1,14 @@
-# WallThing
+          # WallThing
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
+### This project is in development ###
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The project enables users to visualize available art pieces on there wall or wherever they desire.
+The project was created in Angular and is currently using HTML canvas to freely move and resize the picked artworks and also add custom frames.
 
-## Code scaffolding
+The current picture set is gathered from Unsplash through API querys.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Page hosted in: https://ben-sz.github.io/wallThing/
 
-## Build
+2020.07.21
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
