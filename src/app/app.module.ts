@@ -13,6 +13,7 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { BorderPickerComponent } from './border-picker/border-picker.component'
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     ImageBrowserComponent,
     ImageUploadComponent,
     BorderPickerComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
