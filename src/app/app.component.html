@@ -2,6 +2,8 @@
 
 <app-header></app-header>
 <app-image-browser (newImage)="main.modifyImage($event)" (zoomChange)="main.modifyZoom($event)" ></app-image-browser>
+<app-image-browser-artsy (newImage)="main.modifyImage($event)" (zoomChange)="main.modifyZoom($event)" ></app-image-browser-artsy>
+
 <app-core #main></app-core>
 <div class="bottom-wrapper">
   <app-border-picker (frameInfo)="main.drawFrame($event)" (borderOn)="main.toggleFrame($event)"  ></app-border-picker>

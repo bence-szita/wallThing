@@ -7,13 +7,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppCoreComponent } from './app-core/app-core.component';
 import { ImageBrowserComponent } from './image-browser/image-browser.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataService } from './services/data.service';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { BorderPickerComponent } from './border-picker/border-picker.component'
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HeaderComponent } from './header/header.component';
+import {TokenInterceptorService} from './token-interceptor.service';
+import { ImageBrowserARTSYComponent } from './image-browser-artsy/image-browser-artsy.component'
+
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import { HeaderComponent } from './header/header.component';
     ImageUploadComponent,
     BorderPickerComponent,
     HeaderComponent,
+    ImageBrowserARTSYComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,13 @@ import { HeaderComponent } from './header/header.component';
     FormsModule,
     MatSlideToggleModule
   ],
-  providers: [],
+  providers: [
+   /*  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptorService,
+    multi: true
+  } */
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

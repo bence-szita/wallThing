@@ -4,11 +4,11 @@ import { DataService} from '../services/data.service';
 import { AppCoreComponent } from '../app-core/app-core.component';
 
 @Component({
-  selector: 'app-image-browser',
-  templateUrl: './image-browser.component.html',
-  styleUrls: ['./image-browser.component.css']
+  selector: 'app-image-browser-artsy',
+  templateUrl: './image-browser-artsy.component.html',
+  styleUrls: ['./image-browser-artsy.component.css']
 })
-export class ImageBrowserComponent implements OnInit {
+export class ImageBrowserARTSYComponent implements OnInit {
   @Output() newImage = new EventEmitter<object>();
   @Output() zoomChange = new EventEmitter<number>();
 
@@ -59,7 +59,6 @@ export class ImageBrowserComponent implements OnInit {
 
   ngOnInit() {
     console.log("itt a")
-    this.update_UNSPLASHGallery(); 
 
 
      this.dataService.getToken().subscribe(data => {

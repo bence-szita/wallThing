@@ -1,0 +1,114 @@
+.wrapper-imagebrowser{
+  max-width: 700px;
+  height: 130px;
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  align-items: top;
+  align-content: center;
+  margin-bottom: 30px;
+  margin-right: auto;
+  margin-left: auto;  
+}
+
+.container-imagebrowser{
+  height: 85%;
+  
+}
+
+.container-imagebrowser img{
+  max-height: 90%;
+  margin: 10px;
+  opacity: 0.5;
+  display: flex;
+  align-items: center;
+  align-content: center;
+
+
+/*   display: flex;
+  overflow: scroll; */
+}
+
+.wrapper-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+/*   margin-right: auto;
+  margin-left: auto; */
+
+}
+
+button{
+/*   display: block;
+  background-color: #f7f7f7;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7); 
+  color: gray;
+  margin-top: 20px;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  text-align: center;
+  border-radius: 50%;
+  box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
+  font-size: 20px; */
+  margin: 5px;
+  height: 30px;
+} 
+
+button :disabled{
+opacity: 20%;
+  } 
+
+.buttons .pager-buttons{
+  margin: 5px;
+}
+
+.pager-buttons{
+margin-right: 20px;
+margin-left: 30px;
+display: flex;
+}
+
+.browser-header{
+ display: flex;
+ justify-content: space-between;
+/*   margin-right: auto;
+  margin-left: auto;
+  align-content: center;
+  align-items: center;
+  justify-content: center;  */
+max-width: 700px;
+margin-right: auto;
+margin-left: auto;
+}
+
+.searchbar{
+  display: flex;
+  align-content: flex-start;
+  align-items: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  max-height: 25px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.zoomButtons{
+  display: flex;
+  align-content: flex-end;
+  align-items: center;
+}
+
+.searchInput{
+  max-width: 50px;
+}
+
+
+.highlight{
+  opacity: 1 !important;
+  border: 2px solid black;
+ }
