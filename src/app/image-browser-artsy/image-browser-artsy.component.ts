@@ -60,11 +60,11 @@ export class ImageBrowserARTSYComponent implements OnInit {
   ngOnInit() {
     console.log("itt a")
 
-
      this.dataService.getToken().subscribe(data => {
       console.log("itt jo", data)
       this.TOKEN_ARTSY = data;
       this.update_ARTSYGallery();
+      
 
     })  
 
@@ -72,7 +72,7 @@ export class ImageBrowserARTSYComponent implements OnInit {
   }
 
   update_UNSPLASHGallery(){
-    this.fill_UNSPLASHGallery( this.pageNum , this.searchString, this.APIKEY_UNSPLASH);
+    return this.fill_UNSPLASHGallery( this.pageNum , this.searchString, this.APIKEY_UNSPLASH);
   }
   fill_UNSPLASHGallery( _page, _searchinput, _apikey){
     this.selectedIndex = null;
@@ -80,6 +80,9 @@ export class ImageBrowserARTSYComponent implements OnInit {
     this.dataService.getRemoteData(this.queryUrl_UNSPLASH).subscribe(data => {
       this.imageList = data;
   });
+    
+
+    
   }
 
   update_ARTSYGallery(){
@@ -93,7 +96,11 @@ export class ImageBrowserARTSYComponent implements OnInit {
     this.dataService.getRemoteDataWithHeader(this.queryUrl_ARTSY, this.TOKEN_ARTSY.token).subscribe(data => {
       this.imageList_ARTSY = data;
       console.log("ehhh", this.imageList_ARTSY);
+     
+      
   });
+
+  console.log('link', this.imageList_ARTSY._embedded.artworks[0]._links.thumbnail.href);
   }
 
   get_ARTSYToken(){

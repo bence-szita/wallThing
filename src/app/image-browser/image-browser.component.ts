@@ -20,11 +20,6 @@ export class ImageBrowserComponent implements OnInit {
   searchString : string;
   pageNum : number;
   selectedIndex : number;
-  imageList_ARTSY: any;
-
-  TOKEN_ARTSY : any;
-  queryUrl_ARTSY : string;
-
 
   changeImage(e){
     /* this.appCore._drawImage(e.target.src); */
@@ -50,26 +45,12 @@ export class ImageBrowserComponent implements OnInit {
     this.url_UNSPLASH = "https://api.unsplash.com/search/photos?page=1&query=gorilla&client_id=mo0EDOofA6crGOy5UROfCFEJjrJvLUcwAQMJg-mqsBQ";
     this.pageNum = 1;
     this.queryUrl_UNSPLASH = "https://api.unsplash.com/search/photos?page=" + this.pageNum + "&query=" + this.searchString + "&client_id=" + this.APIKEY_UNSPLASH;
-    /* this.APIKEY_ARTSY =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsInN1YmplY3RfYXBwbGljYXRpb24iOiI1ZjE5NWQyOWVkNzM5ZTAwMGQ0M2VhZmQiLCJleHAiOjE1OTYxMDI2MDEsImlhdCI6MTU5NTQ5NzgwMSwiYXVkIjoiNWYxOTVkMjllZDczOWUwMDBkNDNlYWZkIiwiaXNzIjoiR3Jhdml0eSIsImp0aSI6IjVmMTk1ZDQ5Njc3YTI0MDAwZThjNzk1NyJ9.8w08Z5-mgkApzItGW5xg1pkTepTnTV4RWS9Uo_XhLU4"
-     */
-
   }
 
 
   ngOnInit() {
     console.log("itt a")
     this.update_UNSPLASHGallery(); 
-
-
-     this.dataService.getToken().subscribe(data => {
-      console.log("itt jo", data)
-      this.TOKEN_ARTSY = data;
-      this.update_ARTSYGallery();
-
-    })  
-
- 
   }
 
   update_UNSPLASHGallery(){
@@ -82,34 +63,6 @@ export class ImageBrowserComponent implements OnInit {
       this.imageList = data;
   });
   }
-
-  update_ARTSYGallery(){
-    this.fill_ARTSYGallery( this.pageNum , this.searchString, this.TOKEN_ARTSY);
-  }
-
-  fill_ARTSYGallery( _page, _searchinput, _apikey){
-    this.selectedIndex = null;
-    this.queryUrl_ARTSY = "https://api.artsy.net/api/artworks?cursor=4d8b93b04eb68a1b2c001b9d%3A4d8b93b04eb68a1b2c001b9d"
-    console.log("ohhh", this.imageList);
-    this.dataService.getRemoteDataWithHeader(this.queryUrl_ARTSY, this.TOKEN_ARTSY.token).subscribe(data => {
-      this.imageList_ARTSY = data;
-      console.log("ehhh", this.imageList_ARTSY);
-  });
-  }
-
-  get_ARTSYToken(){
-    this.dataService.getToken().subscribe(data => {
-      this.TOKEN_ARTSY = data;
-
-  });
-
-    return this.TOKEN_ARTSY;
-  }
-
-
-
-
-
 
 
   nextPage(){
