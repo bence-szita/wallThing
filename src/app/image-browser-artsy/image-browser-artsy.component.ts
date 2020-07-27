@@ -51,22 +51,18 @@ export class ImageBrowserARTSYComponent implements OnInit {
 
 
   constructor( private dataService: DataService) {
-    this.searchString = 'Andy+Warhol';
+    this.searchString = 'Andy Warhol';
     this.pageNum = 1;
 
   }
 
 
   ngOnInit() {
-    console.log("itt a")
 
      this.dataService.getToken().subscribe(data => {
-      console.log("itt jo", data)
       this.TOKEN_ARTSY = data;
       this.update_ARTSYGallery();
     })  
-
-
 
  
   }
@@ -94,10 +90,8 @@ export class ImageBrowserARTSYComponent implements OnInit {
   
     this.dataService.getRemoteDataWithHeader(this.queryUrl_ARTSY, this.TOKEN_ARTSY.token).subscribe(data => {
       this.imageList_ARTSY = data;
-      console.log("isitworking", this.imageList_ARTSY);
       this.queryUrl_ARTSY_next = this.imageList_ARTSY._links.next.href;
      /*  this.queryUrl_ARTSY_previous = this.imageList_ARTSY._links.self.href; */
-      console.log( this.queryUrl_ARTSY_next);
      return this.imageList_ARTSY ;
   });
 

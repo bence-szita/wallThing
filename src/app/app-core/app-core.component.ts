@@ -56,7 +56,6 @@ export class AppCoreComponent implements OnInit{
       this.backgroundHeight = this.background.nativeElement.height;
       this.getCanvasSize();
 
-     console.log("bgload", this.imageCenterPosition);
     }
   
 
@@ -69,10 +68,8 @@ export class AppCoreComponent implements OnInit{
      /*  this.getImagePosition(); */
     if (!this.isImageRendered){
       this.imageCenterPosition = [this.canvasWidth/2,this.canvasHeight/2];
-    console.log("img center",this.imageCenterPosition ,this.canvasWidth/2 ,this.canvasHeight/2);
       this.isImageRendered = true;
     }
-    console.log("after init img center",this.imageCenterPosition ,this.canvasWidth/2 ,this.canvasHeight/2);
     
      /*  this._imgRender(); */
     }
@@ -87,16 +84,13 @@ export class AppCoreComponent implements OnInit{
      this.cursorPosOnImageX = -1*(this.imageCenterPosition[0] - mouseX);
      this.cursorPosOnImageY = this.imageCenterPosition[1] - mouseY;
   
-      console.log(this.currentX);
      if ((this.cursorPosOnImageX <= this.actualFramedImgSize[0]*0.5) &&
           (this.cursorPosOnImageX >= this.actualFramedImgSize[0]*-0.5) &&
           (this.cursorPosOnImageY <= this.actualFramedImgSize[1]*0.5) &&
           (this.cursorPosOnImageY >= this.actualFramedImgSize[1]*-0.5) 
          ) {
               this.isImageMovable = true;
-              console.log('touch start')
      }
-     console.log("e pagex, cavasrect, cursorpos", e.pageX, canvasRect.x, this.cursorPosOnImageX);
      this._drawImage(this.framed_img);
 
    }); 
@@ -105,14 +99,11 @@ export class AppCoreComponent implements OnInit{
    /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
    if (this.isImageMovable){
     var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
-    console.log("e pagex, cavasrect, cursorpos", e.pageX, canvasRect.x, this.cursorPosOnImageX);
 
     this.imageCenterPosition[0] = Math.ceil(e.pageX - canvasRect.x - this.cursorPosOnImageX);
     this.imageCenterPosition[1] = Math.ceil(e.pageY - canvasRect.y + this.cursorPosOnImageY);
 
 
-    console.log(this.imageCenterPosition[0]);
-    console.log(this.imageCenterPosition[1]);
       this.ResetCanvas()
       this._drawImage(this.framed_img);
     }
@@ -126,14 +117,12 @@ export class AppCoreComponent implements OnInit{
     this.cursorPosOnImageX = -1*(this.imageCenterPosition[0] - mouseX);
     this.cursorPosOnImageY = this.imageCenterPosition[1] - mouseY;
  
-     console.log(this.currentX);
     if ((this.cursorPosOnImageX <= this.actualFramedImgSize[0]*0.5) &&
          (this.cursorPosOnImageX >= this.actualFramedImgSize[0]*-0.5) &&
          (this.cursorPosOnImageY <= this.actualFramedImgSize[1]*0.5) &&
          (this.cursorPosOnImageY >= this.actualFramedImgSize[1]*-0.5) 
         ) {
              this.isImageMovable = true;
-             console.log('touch start')
     }
 
 
@@ -157,7 +146,6 @@ export class AppCoreComponent implements OnInit{
     canvasID.addEventListener('touchend', (e) => {
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
      this.isImageMovable = false;
-     console.log('touch end')
     
     });
 
@@ -177,7 +165,6 @@ export class AppCoreComponent implements OnInit{
   getImagePosition(){
     this.imagePosX = this.canvasWidth/2 - this.actualFramedImgSize[0]/2;
     this.imagePosY = this.canvasHeight/2 - this.actualFramedImgSize[1]/2;
-    console.log("img pos x y", this.imagePosX, this.imagePosX)
     this.currentX = this.imagePosX;
     this.currentY = this.imagePosY;
   }
@@ -213,11 +200,6 @@ export class AppCoreComponent implements OnInit{
     this.ctx.drawImage(imageToRender, this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2,
                                       this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2,
                                       this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
-    
-    console.log("after init img center",this.imageCenterPosition ,this.canvasWidth/2 ,this.canvasHeight/2);
-    console.log("imd width zoom",this.framed_img.width ,this.imageZoom)
-    console.log('ide draw', this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2, this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2 );
-
 
     if (this.borderToggle){
       this._drawFrame();
@@ -229,7 +211,6 @@ export class AppCoreComponent implements OnInit{
    this.canvasHeight = this.background.nativeElement.height;
    this.imageCenterPosition = [this.canvasWidth/2,this.canvasHeight/2];
    
-   console.log("canvasload", this.imageCenterPosition);
   }
 
   modifyBackGround(_newBackground){
@@ -276,7 +257,6 @@ export class AppCoreComponent implements OnInit{
     this.frameWidth = e.frameWidth;
     this.bgColor = e.bgColor;
     this.bgWidth = e.bgWidth;
-    /* console.log("aaa", this.imageCenterPosition[0]); */
 
     if (this.imageCenterPosition !== undefined){
       this._drawImage(this.framed_img);

@@ -11,12 +11,12 @@
   <mat-radio-group
     aria-labelledby="example-radio-group-label"
     class="example-radio-group matradiogroup"
-    [(ngModel)]="imageSource">
-    <mat-radio-button class="example-radio-button" color="primary" *ngFor="let imageSrc of imageSourceList" [value]="imageSrc">
+    [(ngModel)]="imageSourcePicked">
+    <mat-radio-button class="example-radio-button" color="primary" *ngFor="let imageSrc of imageSourceList" [value]="imageSrc" (change)="handleChange($event)" >
       {{imageSrc}}
     </mat-radio-button>
   </mat-radio-group>
-
 </div>
+
 
 

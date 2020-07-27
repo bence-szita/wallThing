@@ -11,6 +11,13 @@ import { AppCoreComponent } from './app-core/app-core.component';
 })
 export class AppComponent {
   title = 'wallThing';
+  imageSource : string='Artsy';
+
+
+
+  setImageSource(e){
+    this.imageSource = e;
+  }
 
 
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ImageBrowserARTSYComponent } from '../image-browser-artsy/image-browser-artsy.component';
+import { Component, OnInit,EventEmitter, Output  } from '@angular/core';
+
 
 @Component({
   selector: 'app-header',
@@ -7,12 +7,23 @@ import { ImageBrowserARTSYComponent } from '../image-browser-artsy/image-browser
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Output() imageSourceForUI: EventEmitter<any> = new EventEmitter<any>();
 
+  imageSourcePicked: string = 'Artsy';
   imageSourceList: string[] = ['Unsplash', 'Artsy'];
-  imageSource: string = 'Unsplash';
-  constructor() { }
+ 
+
+  constructor() {
+/*     this.imageSourceForUI.emit('imageSourcePicked'); */
+  this.imageSourceForUI.emit('Artsy');
+   }
 
   ngOnInit(): void {
+ 
+  }
+
+  handleChange(e){
+    this.imageSourceForUI.emit(e.value);
   }
 
 }

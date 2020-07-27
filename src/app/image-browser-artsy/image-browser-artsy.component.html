@@ -11,12 +11,13 @@
       <button mat-raised-button color="primary" class="searchbutton" mat-raised-button (click)="update_ARTSYGallery()">Search
       </button>
 
-    <div class="pager-buttons" >
-        <button type="button" [disabled]="pageNum === 1" (click)="previousPage()"> Previous
-      </button>
-        <button type="button" (click)="nextPage()"> Next
+ 
+      <div class="pager-buttons" >
+        <button mat-raised-button color="$mat-black"  [disabled]="pageNum === 1" (click)="previousPage()"> Prev
         </button>
-    </div>
+        <button mat-raised-button color="$mat-black" (click)="nextPage()"> Next
+          </button>
+      </div>
   </div>
 
   <div class="buttons zoomButtons">

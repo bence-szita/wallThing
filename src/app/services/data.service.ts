@@ -11,9 +11,6 @@ export class DataService {
   tokendata : any;
 
   constructor(private http: HttpClient ) {
-    /* this.http.post(this.tokenquery,'').toPromise().then(data => {
-      this.tokendata = data;
-    }); */
 
     const httpOptions =  {
       headers: new HttpHeaders({
@@ -32,7 +29,6 @@ export class DataService {
 
     let headers = new HttpHeaders();
     headers = headers.append(`X-Xapp-Token`, `${_authToken}`);
-    console.log("eezittmii", headers);
 
     return this.http.get(url,{headers})
   }

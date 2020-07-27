@@ -1,8 +1,8 @@
 
 
-<app-header></app-header>
-<app-image-browser (newImage)="main.modifyImage($event)" (zoomChange)="main.modifyZoom($event)" ></app-image-browser>
-<app-image-browser-artsy (newImage)="main.modifyImage($event)" (zoomChange)="main.modifyZoom($event)" ></app-image-browser-artsy>
+<app-header (imageSourceForUI)="setImageSource($event)"></app-header>
+<app-image-browser *ngIf="imageSource == 'Unsplash'" (newImage)="main.modifyImage($event)" (zoomChange)="main.modifyZoom($event)" ></app-image-browser>
+<app-image-browser-artsy *ngIf="imageSource == 'Artsy'" (newImage)="main.modifyImage($event)" (zoomChange)="main.modifyZoom($event)" ></app-image-browser-artsy>
 
 <app-core #main></app-core>
 <div class="bottom-wrapper">
