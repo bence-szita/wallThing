@@ -3,3 +3,24 @@ input{
   height: 20px;
   margin: 5px;
 }
+
+.borderpicker{
+  display: flex;
+  align-items: flex-start;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+mat-slide-toggle{
+margin-top: 5px;
+display: flex;
+  align-items: flex-start;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+
+mat-raised-button{
+  max-width: 20px;
+}

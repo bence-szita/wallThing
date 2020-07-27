@@ -1,24 +1,39 @@
 <div class="browser-header">
     <div class="searchbar">
 
-        <input class="searchInput" type="text" placeholder="search" [(ngModel)]="searchString">
-        <button class="searchbutton" type="button" mat-raised-button (click)="updateGallery()">Search
+<!--         <input class="searchInput" type="text" placeholder="search" [(ngModel)]="searchString">
+ -->
+       <!--  <mat-form-field appearance="standard">
+          <mat-label>Standard form field</mat-label>
+          <input matInput placeholder="gorilla" class="searchInput" [(ngModel)]="searchString">
+
+        </mat-form-field> -->
+
+        <mat-form-field appearance="standard">
+          <mat-label>Search</mat-label>
+          <input matInput placeholder="abstract" [(ngModel)]="searchString">
+  
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" class="searchbutton" type="button" mat-raised-button (click)="updateGallery()">Search
         </button>
 
+
+
       <div class="pager-buttons" >
-          <button type="button" [disabled]="pageNum === 1" (click)="previousPage()"> Previous
+        <button mat-raised-button color="primary" [disabled]="pageNum === 1" (click)="previousPage()"> Prev
         </button>
-          <button type="button" (click)="nextPage()"> Next
+        <button mat-raised-button color="$mat-black" (click)="nextPage()"> Next
           </button>
       </div>
     </div>
 
+
     <div class="buttons zoomButtons">
 
-      <button type="button" mat-raised-button (click)="decreaseZoom($event)">-
+      <button mat-raised-button color="primary" id ="zoombuttonplus" (click)="decreaseZoom($event)">-
       </button>
-
-        <button type="button" mat-raised-button (click)="increaseZoom($event)"> +
+      <button mat-raised-button color="primary" id ="zoombuttonminus" (click)="increaseZoom($event)"> +
       </button>
 
     </div>
