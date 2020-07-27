@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { HttpClient} from '@angular/common/http'; 
 import { DataService} from '../services/data.service';
 import { AppCoreComponent } from '../app-core/app-core.component';
+import { map } from "rxjs/operators";
 
 @Component({
   selector: 'app-image-browser-artsy',
@@ -25,9 +26,14 @@ export class ImageBrowserARTSYComponent implements OnInit {
   TOKEN_ARTSY : any;
   queryUrl_ARTSY : string;
 
+  queryUrl_ARTSY_next : string;
+  queryUrl_ARTSY_previous : string;
+
 
   changeImage(e){
     /* this.appCore._drawImage(e.target.src); */
+
+    console.log(e.target);
     this.newImage.emit(e.target.src)
   }
 
@@ -45,14 +51,8 @@ export class ImageBrowserARTSYComponent implements OnInit {
 
 
   constructor( private dataService: DataService) {
-    this.searchString = 'abstract';
-    this.APIKEY_UNSPLASH = "mo0EDOofA6crGOy5UROfCFEJjrJvLUcwAQMJg-mqsBQ";  
-    this.url_UNSPLASH = "https://api.unsplash.com/search/photos?page=1&query=gorilla&client_id=mo0EDOofA6crGOy5UROfCFEJjrJvLUcwAQMJg-mqsBQ";
+    this.searchString = 'Andy+Warhol';
     this.pageNum = 1;
-    this.queryUrl_UNSPLASH = "https://api.unsplash.com/search/photos?page=" + this.pageNum + "&query=" + this.searchString + "&client_id=" + this.APIKEY_UNSPLASH;
-    /* this.APIKEY_ARTSY =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6IiIsInN1YmplY3RfYXBwbGljYXRpb24iOiI1ZjE5NWQyOWVkNzM5ZTAwMGQ0M2VhZmQiLCJleHAiOjE1OTYxMDI2MDEsImlhdCI6MTU5NTQ5NzgwMSwiYXVkIjoiNWYxOTVkMjllZDczOWUwMDBkNDNlYWZkIiwiaXNzIjoiR3Jhdml0eSIsImp0aSI6IjVmMTk1ZDQ5Njc3YTI0MDAwZThjNzk1NyJ9.8w08Z5-mgkApzItGW5xg1pkTepTnTV4RWS9Uo_XhLU4"
-     */
 
   }
 
@@ -64,43 +64,44 @@ export class ImageBrowserARTSYComponent implements OnInit {
       console.log("itt jo", data)
       this.TOKEN_ARTSY = data;
       this.update_ARTSYGallery();
-      
-
     })  
+
+
 
  
   }
-
-  update_UNSPLASHGallery(){
-    return this.fill_UNSPLASHGallery( this.pageNum , this.searchString, this.APIKEY_UNSPLASH);
-  }
-  fill_UNSPLASHGallery( _page, _searchinput, _apikey){
-    this.selectedIndex = null;
-    this.queryUrl_UNSPLASH = "https://api.unsplash.com/search/photos?page=" + _page + "&query=" + _searchinput + "&client_id=" + _apikey;
-    this.dataService.getRemoteData(this.queryUrl_UNSPLASH).subscribe(data => {
-      this.imageList = data;
-  });
-    
-
-    
-  }
+ 
+  
 
   update_ARTSYGallery(){
-    this.fill_ARTSYGallery( this.pageNum , this.searchString, this.TOKEN_ARTSY);
+    return this.fill_ARTSYGallery( this.pageNum , this.searchString, this.TOKEN_ARTSY, null);
   }
 
-  fill_ARTSYGallery( _page, _searchinput, _apikey){
+    /* conditional argument for next and previous querys */
+  fill_ARTSYGallery( _page, _searchinput, _apikey, apiQueryNext ){
     this.selectedIndex = null;
-    this.queryUrl_ARTSY = "https://api.artsy.net/api/artworks?cursor=4d8b93b04eb68a1b2c001b9d%3A4d8b93b04eb68a1b2c001b9d"
-    console.log("ohhh", this.imageList);
+
+    if (apiQueryNext!= null){
+      console.log()
+      this.queryUrl_ARTSY = apiQueryNext;
+      this.queryUrl_ARTSY_previous = this.imageList_ARTSY._links.self.href;
+    }
+    else{
+      this.queryUrl_ARTSY = "https://api.artsy.net/api/search?q=" + this.searchString;
+
+    }
+
+  
     this.dataService.getRemoteDataWithHeader(this.queryUrl_ARTSY, this.TOKEN_ARTSY.token).subscribe(data => {
       this.imageList_ARTSY = data;
-      console.log("ehhh", this.imageList_ARTSY);
-     
-      
+      console.log("isitworking", this.imageList_ARTSY);
+      this.queryUrl_ARTSY_next = this.imageList_ARTSY._links.next.href;
+     /*  this.queryUrl_ARTSY_previous = this.imageList_ARTSY._links.self.href; */
+      console.log( this.queryUrl_ARTSY_next);
+     return this.imageList_ARTSY ;
   });
 
-  console.log('link', this.imageList_ARTSY._embedded.artworks[0]._links.thumbnail.href);
+
   }
 
   get_ARTSYToken(){
@@ -113,18 +114,13 @@ export class ImageBrowserARTSYComponent implements OnInit {
   }
 
 
-
-
-
-
-
   nextPage(){
     this.pageNum += 1;
-    this.fill_UNSPLASHGallery( this.pageNum, this.searchString, this.APIKEY_UNSPLASH);
+    this.fill_ARTSYGallery( this.pageNum, this.searchString, this.APIKEY_UNSPLASH, this.queryUrl_ARTSY_next);
   }
   previousPage(){
     this.pageNum -= 1;
-    this.fill_UNSPLASHGallery( this.pageNum, this.searchString, this.APIKEY_UNSPLASH);
+    this.fill_ARTSYGallery( this.pageNum, this.searchString, this.APIKEY_UNSPLASH, this.queryUrl_ARTSY_next);
   }
   
   public highlightImage(_index: number) {

@@ -1,8 +1,14 @@
 <div class="browser-header">
   <div class="searchbar">
 
-      <input class="searchInput" type="text" placeholder="search" [(ngModel)]="searchString">
-      <button class="searchbutton" type="button" mat-raised-button (click)="update_UNSPLASHGallery()">Search
+      
+    <mat-form-field appearance="standard">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="abstract" [(ngModel)]="searchString">
+    </mat-form-field>
+
+
+      <button mat-raised-button color="primary" class="searchbutton" mat-raised-button (click)="update_ARTSYGallery()">Search
       </button>
 
     <div class="pager-buttons" >
@@ -15,10 +21,10 @@
 
   <div class="buttons zoomButtons">
 
-    <button type="button" mat-raised-button (click)="decreaseZoom($event)">-
+    <button mat-raised-button color="primary" (click)="decreaseZoom($event)">-
     </button>
 
-      <button type="button" mat-raised-button (click)="increaseZoom($event)"> +
+    <button mat-raised-button color="primary" (click)="increaseZoom($event)"> +
     </button>
 
   </div>
@@ -27,11 +33,12 @@
 
 <div class="wrapper-imagebrowser">
 
-    <div *ngFor="let image of this.imageList?.results; let i = index; " class="container-imagebrowser" (click)="changeImage($event); highlightImage(i)">
-      <img src="{{image.urls.small}}" alt="" [ngClass]="{'highlight': selectedIndex === i}" >
-    </div>
+  <div *ngFor="let image of this.imageList_ARTSY?._embedded.results; let i = index; " class="container-imagebrowser" (click)="changeImage($event); highlightImage(i)">
+    <img src="{{image._links.thumbnail.href}}" alt="" [ngClass]="{'highlight': selectedIndex === i}" >
+  </div>
 
 </div>
+
 
 
 

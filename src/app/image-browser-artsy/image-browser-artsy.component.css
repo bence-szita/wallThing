@@ -39,25 +39,14 @@
 }
 
 button{
-/*   display: block;
-  background-color: #f7f7f7;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
-  background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7); 
-  background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7); 
-  background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7); 
-  background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7); 
-  color: gray;
-  margin-top: 20px;
-  width: 20px;
-  height: 20px;
-  padding: 0;
-  text-align: center;
-  border-radius: 50%;
-  box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
-  font-size: 20px; */
-  margin: 5px;
-  height: 30px;
-} 
+
+  margin: 2px;
+/*    height: 20px; 
+  width: 25px; */ 
+
+min-width: 20px; 
+line-height: 25px;
+}  
 
 button :disabled{
 opacity: 20%;
@@ -68,22 +57,18 @@ opacity: 20%;
 }
 
 .pager-buttons{
-margin-right: 20px;
-margin-left: 30px;
+/* margin-right: 20px;
+margin-left: 30px; */
 display: flex;
 }
 
 .browser-header{
  display: flex;
  justify-content: space-between;
-/*   margin-right: auto;
-  margin-left: auto;
-  align-content: center;
-  align-items: center;
-  justify-content: center;  */
 max-width: 700px;
 margin-right: auto;
 margin-left: auto;
+margin-top: 15px;
 }
 
 .searchbar{
@@ -93,8 +78,8 @@ margin-left: auto;
   margin-top: auto;
   margin-bottom: auto;
   max-height: 25px;
-  margin-right: 5px;
-  margin-left: 5px;
+/*   margin-right: 5px;
+  margin-left: 5px; */
 }
 
 .zoomButtons{
@@ -111,4 +96,14 @@ margin-left: auto;
 .highlight{
   opacity: 1 !important;
   border: 2px solid black;
+ }
+
+
+ mat-form-field{
+   max-width: 80px;
+   margin-left: 5px
+ }
+
+ #zoombuttonplus #zoombuttonminus{
+   width: 10px;
  }

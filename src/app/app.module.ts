@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppCoreComponent } from './app-core/app-core.component';
@@ -16,6 +14,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HeaderComponent } from './header/header.component';
 import {TokenInterceptorService} from './token-interceptor.service';
 import { ImageBrowserARTSYComponent } from './image-browser-artsy/image-browser-artsy.component'
+import {MatButtonModule} from '@angular/material/button'; 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+
+import {MatRadioModule} from '@angular/material/radio'; 
 
 
 @NgModule({
@@ -33,7 +37,12 @@ import { ImageBrowserARTSYComponent } from './image-browser-artsy/image-browser-
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule
   ],
   providers: [
    /*  {

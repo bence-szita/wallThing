@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ImageBrowserARTSYComponent } from '../image-browser-artsy/image-browser-artsy.component';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  imageSourceList: string[] = ['Unsplash', 'Artsy'];
+  imageSource: string = 'Unsplash';
   constructor() { }
 
   ngOnInit(): void {

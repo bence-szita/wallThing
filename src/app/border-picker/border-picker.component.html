@@ -1,5 +1,12 @@
-<mat-slide-toggle [(ngModel)]="borderToggle"  (change)="this.borderToggleUpdate()" >Slide me!</mat-slide-toggle>
+<div class="borderpicker">
+<mat-slide-toggle [(ngModel)]="borderToggle"  color="primary" (change)="this.borderToggleUpdate()" > Frame on! </mat-slide-toggle>
 <input type="color" value="#ffffff" name="bordercolor" (change)="frameUpdate()" [(ngModel)]="frameColor">
 <input type="number" name="borderwidth" min="0" max="20" value="10" (change)="frameUpdate()" [(ngModel)]="frameWidth">
 <input type="color" value="#ffffff" name="framebgcolor" (change)="frameUpdate()" [(ngModel)]="bgColor"> 
-<input type="number" name="bgwidth" min="0" max="30" value="5" (change)="frameUpdate()" [(ngModel)]="bgWidth">
+ <input type="number" name="bgwidth" min="0" max="30" value="5" (change)="frameUpdate()" [(ngModel)]="bgWidth">
+
+
+
+
+</div>
+

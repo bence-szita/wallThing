@@ -1,6 +1,6 @@
 .header-wrapper{
   display: flex;
-  justify-content: flex-start;
+/*   justify-content: flex-start; */
   margin-left: auto;
   margin-right: auto;
   max-width: 700px;
@@ -10,4 +10,20 @@
 .header-wrapper img{
   align-items: flex-start;
   
+}
+.matradiogroup{
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-top: 15px;
+}
+
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+ 
+}
+
+.example-radio-button {
+  margin: 5px;
 }

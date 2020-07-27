@@ -1,3 +1,22 @@
 <div class="header-wrapper">
 <img src="./assets/images/wt-icon.svg" alt="" width="40px" height="40px">
+
+<!-- <mat-radio-group class="matradiogroup" aria-label="Your source: ">
+  <mat-radio-button color="primary" value="Unsplash" checked>Unsplash</mat-radio-button>
+  <mat-radio-button color="primary" value="Artsy">Artsy</mat-radio-button>
+</mat-radio-group>
 </div>
+ -->
+
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group matradiogroup"
+    [(ngModel)]="imageSource">
+    <mat-radio-button class="example-radio-button" color="primary" *ngFor="let imageSrc of imageSourceList" [value]="imageSrc">
+      {{imageSrc}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+</div>
+
+
