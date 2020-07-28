@@ -76,6 +76,7 @@ export class AppCoreComponent implements OnInit{
  
     
     canvasID.addEventListener('mousedown', (e) => {
+      e.preventDefault();
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
       var mouseX = Math.floor(e.pageX - canvasRect.x);
       var mouseY = Math.floor(e.pageY - canvasRect.y);
@@ -96,6 +97,7 @@ export class AppCoreComponent implements OnInit{
    }); 
 
    canvasID.addEventListener('mousemove', (e) => {
+    e.preventDefault();
    /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
    if (this.isImageMovable){
     var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
@@ -110,6 +112,7 @@ export class AppCoreComponent implements OnInit{
   });
 
     canvasID.addEventListener('touchstart', (e) => {
+      e.preventDefault();
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
       var mouseX = Math.floor(e.changedTouches[0].pageX - canvasRect.x);
       var mouseY = Math.floor(e.changedTouches[0].pageY - canvasRect.y);
@@ -130,6 +133,7 @@ export class AppCoreComponent implements OnInit{
    });
 
     canvasID.addEventListener('touchmove', (e) => {
+      e.preventDefault();
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
       if (this.isImageMovable){
        var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
