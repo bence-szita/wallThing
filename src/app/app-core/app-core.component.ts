@@ -145,7 +145,7 @@ export class AppCoreComponent implements OnInit{
          this.ResetCanvas()
          this._drawImage(this.framed_img);
        }
-    });
+    }, { passive: false });
 
     /* ending click or touch, chaning movable to unmovable */
     canvasID.addEventListener('touchend', (e) => {
