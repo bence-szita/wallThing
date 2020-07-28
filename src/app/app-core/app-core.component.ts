@@ -115,7 +115,7 @@ export class AppCoreComponent implements OnInit{
       var mouseY = Math.floor(e.changedTouches[0].pageY - canvasRect.y);
 
     this.cursorPosOnImageX = -1*(this.imageCenterPosition[0] - mouseX);
-    this.cursorPosOnImageY = this.imageCenterPosition[1] - mouseY;
+    this.cursorPosOnImageY = -1*(this.imageCenterPosition[1] - mouseY);
  
     if ((this.cursorPosOnImageX <= this.actualFramedImgSize[0]*0.5) &&
          (this.cursorPosOnImageX >= this.actualFramedImgSize[0]*-0.5) &&
@@ -125,7 +125,7 @@ export class AppCoreComponent implements OnInit{
              this.isImageMovable = true;
     }
 
-
+      console.log("mouse", mouseX,  mouseY);
 
    });
 
@@ -135,8 +135,9 @@ export class AppCoreComponent implements OnInit{
        var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
        this.imageCenterPosition[0] = Math.ceil(e.changedTouches[0].pageX - canvasRect.x - this.cursorPosOnImageX);
        this.imageCenterPosition[1] = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImageY);
-
-       
+      console.log("mouse", e.changedTouches[0].pageX - canvasRect.x,  e.changedTouches[0].pageY - canvasRect.y);
+      console.log("touch poz", e.changedTouches[0].pageY, canvasRect.y, this.cursorPosOnImageY);
+      console.log("center poz",  this.imageCenterPosition[1]);
          this.ResetCanvas()
          this._drawImage(this.framed_img);
        }
@@ -200,6 +201,8 @@ export class AppCoreComponent implements OnInit{
     this.ctx.drawImage(imageToRender, this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2,
                                       this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2,
                                       this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
+
+    console.log("x: ", this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2, "y: ", this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2)
 
     if (this.borderToggle){
       this._drawFrame();

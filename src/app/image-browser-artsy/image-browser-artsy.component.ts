@@ -85,6 +85,8 @@ export class ImageBrowserARTSYComponent implements OnInit {
     else{
       this.queryUrl_ARTSY = "https://api.artsy.net/api/search?q=" + this.searchString;
 
+      this.queryUrl_ARTSY = "https://api.artsy.net/api/artworks?total_count=1";
+
     }
 
   
@@ -92,6 +94,7 @@ export class ImageBrowserARTSYComponent implements OnInit {
       this.imageList_ARTSY = data;
       this.queryUrl_ARTSY_next = this.imageList_ARTSY._links.next.href;
      /*  this.queryUrl_ARTSY_previous = this.imageList_ARTSY._links.self.href; */
+     console.log(this.imageList_ARTSY._embedded.artworks[6].category);
      return this.imageList_ARTSY ;
   });
 
