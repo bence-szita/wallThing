@@ -22,19 +22,16 @@ export class ImageBrowserComponent implements OnInit {
   selectedIndex : number;
 
   changeImage(e){
-    /* this.appCore._drawImage(e.target.src); */
     this.newImage.emit(e.target.src)
   }
 
   increaseZoom(e){
 
-    /* this.appCore._drawImage(e.target.src); */
     this.zoomChange.emit(+0.05)
     
   }
 
   decreaseZoom(e){
-    /* this.appCore._drawImage(e.target.src); */
     this.zoomChange.emit(-0.05);
   }
 

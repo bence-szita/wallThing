@@ -14,7 +14,6 @@ export class HeaderComponent implements OnInit {
  
 
   constructor() {
-/*     this.imageSourceForUI.emit('imageSourcePicked'); */
   this.imageSourceForUI.emit('Artsy');
    }
 

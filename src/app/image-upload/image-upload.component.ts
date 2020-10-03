@@ -12,13 +12,10 @@ export class ImageUploadComponent implements OnInit {
 
 
   onImageSelected(event){
-/*     console.log(event.target.files[0]); */
     this.reader.readAsDataURL(event.target.files[0]);
     console.log(this.reader)
 
     this.reader.onload = (event) => { // called once readAsDataURL is completed
-      /* console.log('abc', event.target.result) */
-      /* console.log("onload", event.target.result); */
       this.newBackground.emit(event.target.result);
 
     };

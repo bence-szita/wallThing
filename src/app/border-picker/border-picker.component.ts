@@ -7,12 +7,7 @@ import { BorderInfo } from '../border-info'
   styleUrls: ['./border-picker.component.css']
 })
 export class BorderPickerComponent implements OnInit {
-/* 
-  @Output() frameColor = new EventEmitter<BorderInfo>();
-  @Output() frameWidth = new EventEmitter<BorderInfo>();
-  @Output() bgColor = new EventEmitter<BorderInfo>();
-  @Output() bgWidth = new EventEmitter<BorderInfo>();
- */
+
   frameColor: string;
   frameWidth: number;
   bgColor: string;
@@ -25,13 +20,10 @@ export class BorderPickerComponent implements OnInit {
 
   frameUpdate(){
     this.frameInfo.emit({frameColor: this.frameColor, frameWidth: this.frameWidth, bgColor: this.bgColor, bgWidth: this.bgWidth});
-  
   }
 
   borderToggleUpdate(){
     this.borderOn.emit(this.borderToggle);
-
-
   }
 
   constructor() {

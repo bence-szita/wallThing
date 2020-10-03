@@ -31,21 +31,16 @@ export class ImageBrowserARTSYComponent implements OnInit {
 
 
   changeImage(e){
-    /* this.appCore._drawImage(e.target.src); */
-
     console.log(e.target);
     this.newImage.emit(e.target.src)
   }
 
   increaseZoom(e){
-
-    /* this.appCore._drawImage(e.target.src); */
     this.zoomChange.emit(+0.05)
     
   }
 
   decreaseZoom(e){
-    /* this.appCore._drawImage(e.target.src); */
     this.zoomChange.emit(-0.05);
   }
 
@@ -91,7 +86,6 @@ export class ImageBrowserARTSYComponent implements OnInit {
     this.dataService.getRemoteDataWithHeader(this.queryUrl_ARTSY, this.TOKEN_ARTSY.token).subscribe(data => {
       this.imageList_ARTSY = data;
       this.queryUrl_ARTSY_next = this.imageList_ARTSY._links.next.href;
-     /*  this.queryUrl_ARTSY_previous = this.imageList_ARTSY._links.self.href; */
      return this.imageList_ARTSY ;
   });
 

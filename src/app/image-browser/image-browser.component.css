@@ -25,24 +25,18 @@
   align-content: center;
 
 
-/*   display: flex;
-  overflow: scroll; */
 }
 
 .wrapper-buttons{
   display: flex;
   align-items: center;
   justify-content: center;
-/*   margin-right: auto;
-  margin-left: auto; */
 
 }
 
 button{
 
   margin: 2px;
-/*    height: 20px; 
-  width: 25px; */ 
 
 min-width: 20px; 
 line-height: 25px;
@@ -57,8 +51,7 @@ opacity: 20%;
 }
 
 .pager-buttons{
-/* margin-right: 20px;
-margin-left: 30px; */
+
 display: flex;
 }
 
@@ -78,8 +71,7 @@ margin-top: 15px;
   margin-top: auto;
   margin-bottom: auto;
   max-height: 25px;
-/*   margin-right: 5px;
-  margin-left: 5px; */
+
 }
 
 .zoomButtons{

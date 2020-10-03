@@ -34,8 +34,6 @@ export class DataService {
   }
 
   getToken(){
-  /*   return localStorage.getItem('token'); */
-/*       return this.tokendata; */
 
       return this.http.post(this.tokenquery,'');
   }

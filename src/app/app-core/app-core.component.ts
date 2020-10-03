@@ -15,7 +15,6 @@ export class AppCoreComponent implements OnInit{
   canvas: ElementRef;
 
   @ViewChild('background') background : ElementRef;
- /*  @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>; */
   public ctx: CanvasRenderingContext2D;
   public framed_img = new Image();
   public background_img = new Image();
@@ -60,18 +59,15 @@ export class AppCoreComponent implements OnInit{
   
 
     this.framed_img.onload = () => {
-      // context.drawImage(framed_img, currentX-(framed_img.width/2), currentY-(framed_img.height/2), framed_img.width*imgScale.value, framed_img.height*imgScale.value);
 
     this.canvasWidth = this.ctx.canvas.clientWidth;
     this.canvasHeight = this.ctx.canvas.clientHeight;
       this.getImageSize();
-     /*  this.getImagePosition(); */
     if (!this.isImageRendered){
       this.imageCenterPosition = [this.canvasWidth/2,this.canvasHeight/2];
       this.isImageRendered = true;
     }
     
-     /*  this._imgRender(); */
     }
  
     
