@@ -211,7 +211,6 @@ export class AppCoreComponent implements OnInit{
   ResetCanvas() {
     this.ctx.rect(0,0,0,0);
     this.ctx.clearRect(0, 0, this.canvasData.width, this.canvasData.height);
-
   }
 
   modifyImage(newImage){
@@ -238,13 +237,7 @@ export class AppCoreComponent implements OnInit{
     }
   }
 
- /*  getCanvasSize(){
-    this.canvasData.width = this.background.nativeElement.width;
-    this.canvasData.height = this.background.nativeElement.height;
-    this.imageCenterPosition.x = this.canvasData.width/2;
-    this.imageCenterPosition.y = this.canvasData.width/2;
-  }
- */
+ 
   modifyBackGround(_newBackground){
     this.background_img.src = _newBackground;
   }
@@ -279,7 +272,6 @@ export class AppCoreComponent implements OnInit{
     if (this.imageCenterPosition !== undefined){
       this._drawImage(this.framed_img);
     }
-
 
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { BorderInfo } from '../border-info'
+import { BorderInfo } from '../models/border-info'
 
 @Component({
   selector: 'app-border-picker',
