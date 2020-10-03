@@ -1,15 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, Directive, HostListener, AfterViewInit  } from '@angular/core';
-
-
-export interface coordinates {
-  x: number;
-  y: number;
-}
-
-export interface dimensions {
-  height: number;
-  width: number;
-}
+import { coordinates} from '../models/coordinates'
+import { dimensions} from '../models/dimensions'
 
 
 @Component({
@@ -20,10 +11,9 @@ export interface dimensions {
 })
 export class AppCoreComponent implements OnInit{
 
-  @ViewChild('canvas', {static: true})
-  canvas: ElementRef;
-
+  @ViewChild('canvas', {static: true}) canvas: ElementRef;
   @ViewChild('background') background : ElementRef;
+
   ctx: CanvasRenderingContext2D;
   framed_img = new Image();
   background_img = new Image();
@@ -32,13 +22,13 @@ export class AppCoreComponent implements OnInit{
   isImageMovable: boolean= false;
   isImageRendered: boolean = false;
   borderToggle: boolean;
-  imageZoom: number;
+  imageZoom: number = 0.5;
   mySize: number;
 
   /* canvas dimensions */
   canvasData: dimensions = {width: 0, height: 0};
    /* Dimensions of background image for canvas */
-  backgroundData: dimensions = { width: 0, height: 0}
+  canvasBackground: dimensions = { width: 0, height: 0}
 
   /* coordinates of currently rendered image */
   current: coordinates = {x: 0, y: 0};
@@ -72,31 +62,31 @@ export class AppCoreComponent implements OnInit{
     this.framed_img.src = "https://images.unsplash.com/photo-1557218825-334e575bcc38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEzOTE3OH0";
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
     const canvasID = document.getElementById('stage');
-    this.imageZoom = 0.5;
 
     this.background_img.onload = () => {
-      this.backgroundData.width = this.background.nativeElement.width;
-      this.backgroundData.height = this.background.nativeElement.height;
-      this.getCanvasSize();
+      this.canvasBackground.width = this.background.nativeElement.width;
+      this.canvasBackground.height = this.background.nativeElement.height; 
+      
+      console.log('fr width:', this.framed_img.width, 'fr height:', this.framed_img.height)
+
+      this.getImageSize();
 
     }
   
 
     this.framed_img.onload = () => {
+      console.log('fr onload w:', this.framed_img.width, 'fr onload height:', this.framed_img.height)
 
-      
-    this.canvasData.width = this.ctx.canvas.clientWidth;
-    this.canvasData.height = this.ctx.canvas.clientHeight;
       this.getImageSize();
-    if (!this.isImageRendered){
-     /*  this.imageCenterPosition = [this.canvasData.width/2,this.canvasData.height/2]; */
-      this.imageCenterPosition.x = this.canvasData.width/2;
-      this.imageCenterPosition.y = this.canvasData.width/2;
-      console.log('rendered', this.imageCenterPosition)
-     
-      this.isImageRendered = true;
-    }
-    
+      this.canvasData.width = this.ctx.canvas.clientWidth;
+      this.canvasData.height = this.ctx.canvas.clientHeight;
+/*       this.getImageSize() */ //not needed
+        if (!this.isImageRendered){
+          this.initImagePosition()
+          console.log('rendered', this.imageCenterPosition)
+        
+          this.isImageRendered = true;
+        }
     }
  
     
@@ -192,9 +182,16 @@ export class AppCoreComponent implements OnInit{
 
   }
 
+
+  /* initiated starting position for image, depending on canvas size */
+  initImagePosition(){
+    this.imageCenterPosition.x = this.canvasData.width/2;
+    this.imageCenterPosition.y = this.canvasData.height/2;
+  }
+
   getImagePosition(){
     this.imagePosition.x = this.canvasData.width/2 - this.actualSize.width/2;
-    this.imagePosition.x = this.canvasData.height/2 - this.actualSize.height/2;
+    this.imagePosition.y = this.canvasData.height/2 - this.actualSize.height/2;
     this.current.x = this.imagePosition.x;
     this.current.y = this.imagePosition.y;
   }
@@ -208,8 +205,6 @@ export class AppCoreComponent implements OnInit{
     this.getImageSize();
    }
   _imgRender(){
-  /*   this.mouseEvents();
- */
     this._drawImage(this.framed_img)
   }
 
@@ -220,9 +215,14 @@ export class AppCoreComponent implements OnInit{
   }
 
   modifyImage(newImage){
+
+    console.log('new', newImage)
     this.ResetCanvas();
     this.framed_img.src = newImage;
+    console.log("modify width : ", this.framed_img.width*this.imageZoom, "modify height ", this.framed_img.height*this.imageZoom)
+
      this._drawImage(this.framed_img) 
+
 
   }
   _drawImage(imageToRender){
@@ -238,14 +238,13 @@ export class AppCoreComponent implements OnInit{
     }
   }
 
-  getCanvasSize(){
+ /*  getCanvasSize(){
     this.canvasData.width = this.background.nativeElement.width;
-   this.canvasData.height = this.background.nativeElement.height;
-   this.imageCenterPosition.x = this.canvasData.width/2;
-   this.imageCenterPosition.y = this.canvasData.width/2;
-   
+    this.canvasData.height = this.background.nativeElement.height;
+    this.imageCenterPosition.x = this.canvasData.width/2;
+    this.imageCenterPosition.y = this.canvasData.width/2;
   }
-
+ */
   modifyBackGround(_newBackground){
     this.background_img.src = _newBackground;
   }

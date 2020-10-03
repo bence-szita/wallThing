@@ -31,7 +31,8 @@ export class ImageBrowserARTSYComponent implements OnInit {
 
 
   changeImage(e){
-    console.log(e.target);
+    
+   /* replaces square with medium for higher quality image */
     this.newImage.emit(e.target.src)
   }
 

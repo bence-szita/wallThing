@@ -37,7 +37,7 @@
   <div *ngFor="let image of this.imageList_ARTSY?._embedded.results; let i = index; " class="container-imagebrowser" (click)="changeImage($event); highlightImage(i)">
     
     <!-- only display image if link exists -->
-    <div *ngIf="image._links.thumbnail.href !== '/assets/shared/missing_image.png' ">
+    <div *ngIf="image._links.thumbnail.href !== '/assets/shared/missing_image.png'" class="max-height">
       <img  src="{{image._links.thumbnail.href}}" [ngClass]="{'highlight': selectedIndex === i}" >
     </div>
   </div>

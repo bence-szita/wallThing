@@ -101,3 +101,7 @@ margin-top: 15px;
  #zoombuttonplus #zoombuttonminus{
    width: 10px;
  }
+
+ .max-height{
+   height: 100%;
+ }

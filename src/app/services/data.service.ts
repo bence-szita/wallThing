@@ -29,7 +29,7 @@ export class DataService {
 
     let headers = new HttpHeaders();
     headers = headers.append(`X-Xapp-Token`, `${_authToken}`);
-
+    console.log(url)
     return this.http.get(url,{headers})
   }
 
