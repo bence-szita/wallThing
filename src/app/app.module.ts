@@ -12,7 +12,6 @@ import { BorderPickerComponent } from './border-picker/border-picker.component'
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HeaderComponent } from './header/header.component';
-import {TokenInterceptorService} from './token-interceptor.service';
 import { ImageBrowserARTSYComponent } from './image-browser-artsy/image-browser-artsy.component'
 import {MatButtonModule} from '@angular/material/button'; 
 import { MatFormFieldModule } from '@angular/material/form-field';

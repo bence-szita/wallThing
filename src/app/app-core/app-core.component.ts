@@ -1,7 +1,16 @@
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation, Directive, HostListener, AfterViewInit  } from '@angular/core';
-import { NgModule } from '@angular/core';
-import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
-import { throwError } from 'rxjs';
+
+
+export interface coordinates {
+  x: number;
+  y: number;
+}
+
+export interface dimensions {
+  height: number;
+  width: number;
+}
+
 
 @Component({
   selector: 'app-core',
@@ -15,33 +24,48 @@ export class AppCoreComponent implements OnInit{
   canvas: ElementRef;
 
   @ViewChild('background') background : ElementRef;
-  public ctx: CanvasRenderingContext2D;
-  public framed_img = new Image();
-  public background_img = new Image();
-  canvasWidth : number;
-  canvasHeight : number;
+  ctx: CanvasRenderingContext2D;
+  framed_img = new Image();
+  background_img = new Image();
+  newBackground = new Image();
+
   isImageMovable: boolean= false;
-  currentX : number;
-  currentY : number;
-  imageWidth: number= 200;
-  imageHeight: number= 300;
-  imagePosX: number;
-  imagePosY: number;
-  cursorPosOnImageX: number;
-  cursorPosOnImageY: number;
+  isImageRendered: boolean = false;
+  borderToggle: boolean;
   imageZoom: number;
   mySize: number;
-  backgroundWidth: number;
-  backgroundHeight: number;
-  actualFramedImgSize: Array<number>;
-  imageCenterPosition: Array<number>;
-  isImageRendered: boolean = false;
-  newBackground = new Image();
+
+  /* canvas dimensions */
+  canvasData: dimensions = {width: 0, height: 0};
+   /* Dimensions of background image for canvas */
+  backgroundData: dimensions = { width: 0, height: 0}
+
+  /* coordinates of currently rendered image */
+  current: coordinates = {x: 0, y: 0};
+  /* coordinates of image to be rendered */
+  imagePosition: coordinates  = {x: 0, y: 0};
+  /* dimensions of image to be rendered */
+  actualSize : dimensions = { width: 0, height: 0}
+
+  /* coordinates of cursor on an image inside the canvas */
+  cursorPosOnImage: coordinates = {x: 0, y: 0};
+
+  /* imageCenterPosition: Array<number>; */
+  imageCenterPosition: coordinates = {x: 0, y: 0};
+
+  
+  /* parameters for frames */
   frameColor: string;
   frameWidth: number;
   bgColor: string;
   bgWidth: number;
-  borderToggle: boolean;
+ 
+
+  constructor() {
+   
+  }
+
+
 
   ngOnInit() {
     this.background_img.src = "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80";
@@ -51,8 +75,8 @@ export class AppCoreComponent implements OnInit{
     this.imageZoom = 0.5;
 
     this.background_img.onload = () => {
-      this.backgroundWidth = this.background.nativeElement.width;
-      this.backgroundHeight = this.background.nativeElement.height;
+      this.backgroundData.width = this.background.nativeElement.width;
+      this.backgroundData.height = this.background.nativeElement.height;
       this.getCanvasSize();
 
     }
@@ -60,11 +84,16 @@ export class AppCoreComponent implements OnInit{
 
     this.framed_img.onload = () => {
 
-    this.canvasWidth = this.ctx.canvas.clientWidth;
-    this.canvasHeight = this.ctx.canvas.clientHeight;
+      
+    this.canvasData.width = this.ctx.canvas.clientWidth;
+    this.canvasData.height = this.ctx.canvas.clientHeight;
       this.getImageSize();
     if (!this.isImageRendered){
-      this.imageCenterPosition = [this.canvasWidth/2,this.canvasHeight/2];
+     /*  this.imageCenterPosition = [this.canvasData.width/2,this.canvasData.height/2]; */
+      this.imageCenterPosition.x = this.canvasData.width/2;
+      this.imageCenterPosition.y = this.canvasData.width/2;
+      console.log('rendered', this.imageCenterPosition)
+     
       this.isImageRendered = true;
     }
     
@@ -78,13 +107,13 @@ export class AppCoreComponent implements OnInit{
       var mouseY = Math.floor(e.pageY - canvasRect.y);
 
       /*  if ( mousex > ) */
-     this.cursorPosOnImageX = -1*(this.imageCenterPosition[0] - mouseX);
-     this.cursorPosOnImageY = this.imageCenterPosition[1] - mouseY;
+     this.cursorPosOnImage.x = -1*(this.imageCenterPosition.x - mouseX);
+     this.cursorPosOnImage.y = this.imageCenterPosition.y - mouseY;
   
-     if ((this.cursorPosOnImageX <= this.actualFramedImgSize[0]*0.5) &&
-          (this.cursorPosOnImageX >= this.actualFramedImgSize[0]*-0.5) &&
-          (this.cursorPosOnImageY <= this.actualFramedImgSize[1]*0.5) &&
-          (this.cursorPosOnImageY >= this.actualFramedImgSize[1]*-0.5) 
+     if ((this.cursorPosOnImage.x <= this.actualSize.width*0.5) &&
+          (this.cursorPosOnImage.x >= this.actualSize.width*-0.5) &&
+          (this.cursorPosOnImage.y <= this.actualSize.height*0.5) &&
+          (this.cursorPosOnImage.y >= this.actualSize.height*-0.5) 
          ) {
               this.isImageMovable = true;
      }
@@ -98,8 +127,8 @@ export class AppCoreComponent implements OnInit{
    if (this.isImageMovable){
     var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
 
-    this.imageCenterPosition[0] = Math.ceil(e.pageX - canvasRect.x - this.cursorPosOnImageX);
-    this.imageCenterPosition[1] = Math.ceil(e.pageY - canvasRect.y + this.cursorPosOnImageY);
+    this.imageCenterPosition.x = Math.ceil(e.pageX - canvasRect.x - this.cursorPosOnImage.x);
+    this.imageCenterPosition.y = Math.ceil(e.pageY - canvasRect.y + this.cursorPosOnImage.y);
 
 
       this.ResetCanvas()
@@ -113,13 +142,13 @@ export class AppCoreComponent implements OnInit{
       var mouseX = Math.floor(e.changedTouches[0].pageX - canvasRect.x);
       var mouseY = Math.floor(e.changedTouches[0].pageY - canvasRect.y);
 
-    this.cursorPosOnImageX = -1*(this.imageCenterPosition[0] - mouseX);
-    this.cursorPosOnImageY = -1*(this.imageCenterPosition[1] - mouseY);
+    this.cursorPosOnImage.x = -1*(this.imageCenterPosition.x - mouseX);
+    this.cursorPosOnImage.y = -1*(this.imageCenterPosition.y - mouseY);
  
-    if ((this.cursorPosOnImageX <= this.actualFramedImgSize[0]*0.5) &&
-         (this.cursorPosOnImageX >= this.actualFramedImgSize[0]*-0.5) &&
-         (this.cursorPosOnImageY <= this.actualFramedImgSize[1]*0.5) &&
-         (this.cursorPosOnImageY >= this.actualFramedImgSize[1]*-0.5) 
+    if ((this.cursorPosOnImage.x <= this.actualSize.width*0.5) &&
+         (this.cursorPosOnImage.x >= this.actualSize.width*-0.5) &&
+         (this.cursorPosOnImage.y <= this.actualSize.height*0.5) &&
+         (this.cursorPosOnImage.y >= this.actualSize.height*-0.5) 
         ) {
              this.isImageMovable = true;
     }
@@ -133,11 +162,11 @@ export class AppCoreComponent implements OnInit{
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
       if (this.isImageMovable){
        var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
-       this.imageCenterPosition[0] = Math.ceil(e.changedTouches[0].pageX - canvasRect.x - this.cursorPosOnImageX);
-       this.imageCenterPosition[1] = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImageY);
+       this.imageCenterPosition.x = Math.ceil(e.changedTouches[0].pageX - canvasRect.x - this.cursorPosOnImage.x);
+       this.imageCenterPosition.y = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImage.y);
       console.log("mouse", e.changedTouches[0].pageX - canvasRect.x,  e.changedTouches[0].pageY - canvasRect.y);
-      console.log("touch poz", e.changedTouches[0].pageY, canvasRect.y, this.cursorPosOnImageY);
-      console.log("center poz",  this.imageCenterPosition[1]);
+      console.log("touch poz", e.changedTouches[0].pageY, canvasRect.y, this.cursorPosOnImage.y);
+      console.log("center poz",  this.imageCenterPosition.y);
          this.ResetCanvas()
          this._drawImage(this.framed_img);
        }
@@ -158,16 +187,16 @@ export class AppCoreComponent implements OnInit{
    };
 
    getImageSize(){
-    this.actualFramedImgSize = [this.framed_img.width, this.framed_img.height].map(item => item * this.imageZoom) ;
+    [this.actualSize.width, this.actualSize.height] = [this.framed_img.width, this.framed_img.height].map(item => item * this.imageZoom) ;
 
 
   }
 
   getImagePosition(){
-    this.imagePosX = this.canvasWidth/2 - this.actualFramedImgSize[0]/2;
-    this.imagePosY = this.canvasHeight/2 - this.actualFramedImgSize[1]/2;
-    this.currentX = this.imagePosX;
-    this.currentY = this.imagePosY;
+    this.imagePosition.x = this.canvasData.width/2 - this.actualSize.width/2;
+    this.imagePosition.x = this.canvasData.height/2 - this.actualSize.height/2;
+    this.current.x = this.imagePosition.x;
+    this.current.y = this.imagePosition.y;
   }
 
 
@@ -186,7 +215,7 @@ export class AppCoreComponent implements OnInit{
 
   ResetCanvas() {
     this.ctx.rect(0,0,0,0);
-    this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    this.ctx.clearRect(0, 0, this.canvasData.width, this.canvasData.height);
 
   }
 
@@ -198,11 +227,11 @@ export class AppCoreComponent implements OnInit{
   }
   _drawImage(imageToRender){
     this.ResetCanvas();
-    this.ctx.drawImage(imageToRender, this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2,
-                                      this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2,
+    this.ctx.drawImage(imageToRender, this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2,
+                                      this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2,
                                       this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
 
-    console.log("x: ", this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2, "y: ", this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2)
+    console.log("x: ", this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2, "y: ", this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2)
 
     if (this.borderToggle){
       this._drawFrame();
@@ -210,9 +239,10 @@ export class AppCoreComponent implements OnInit{
   }
 
   getCanvasSize(){
-    this.canvasWidth = this.background.nativeElement.width;
-   this.canvasHeight = this.background.nativeElement.height;
-   this.imageCenterPosition = [this.canvasWidth/2,this.canvasHeight/2];
+    this.canvasData.width = this.background.nativeElement.width;
+   this.canvasData.height = this.background.nativeElement.height;
+   this.imageCenterPosition.x = this.canvasData.width/2;
+   this.imageCenterPosition.y = this.canvasData.width/2;
    
   }
 
@@ -223,8 +253,8 @@ export class AppCoreComponent implements OnInit{
     /* draw frame background */
     this.ctx.beginPath();
     if (Math.ceil((this.bgWidth/2))){
-      this.ctx.rect(this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2-Math.ceil((this.bgWidth/2)),
-                  this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2-Math.ceil((this.bgWidth/2)),
+      this.ctx.rect(this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2-Math.ceil((this.bgWidth/2)),
+                  this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2-Math.ceil((this.bgWidth/2)),
                   this.framed_img.width*this.imageZoom+this.bgWidth, this.framed_img.height*this.imageZoom+this.bgWidth);
     };
     this.ctx.lineWidth = this.bgWidth; 
@@ -234,8 +264,8 @@ export class AppCoreComponent implements OnInit{
      /* draw background background */
     this.ctx.beginPath();
     if (Math.ceil((this.frameWidth/2))){
-    this.ctx.rect(this.imageCenterPosition[0]-(this.framed_img.width*this.imageZoom)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
-                  this.imageCenterPosition[1]-(this.framed_img.height*this.imageZoom)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
+    this.ctx.rect(this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
+                  this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
                   this.framed_img.width*this.imageZoom+this.bgWidth*2+this.frameWidth, this.framed_img.height*this.imageZoom+this.bgWidth*2+this.frameWidth);
     };              
     this.ctx.lineWidth = this.frameWidth; 
@@ -268,8 +298,6 @@ export class AppCoreComponent implements OnInit{
   }
 
 
-  constructor() {
-   
-   }
+ 
 
 }
