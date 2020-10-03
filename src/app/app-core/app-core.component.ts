@@ -62,6 +62,7 @@ export class AppCoreComponent implements OnInit{
     this.framed_img.src = "https://images.unsplash.com/photo-1557218825-334e575bcc38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEzOTE3OH0";
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
     const canvasID = document.getElementById('stage');
+    
 
     this.background_img.onload = () => {
       this.canvasBackground.width = this.background.nativeElement.width;
@@ -75,78 +76,62 @@ export class AppCoreComponent implements OnInit{
   
 
     this.framed_img.onload = () => {
-      console.log('fr onload w:', this.framed_img.width, 'fr onload height:', this.framed_img.height)
-
+     
       this.getImageSize();
       this.canvasData.width = this.ctx.canvas.clientWidth;
       this.canvasData.height = this.ctx.canvas.clientHeight;
-/*       this.getImageSize() */ //not needed
+
         if (!this.isImageRendered){
           this.initImagePosition()
-          console.log('rendered', this.imageCenterPosition)
-        
           this.isImageRendered = true;
         }
     }
- 
     
+    /* Mouse move: get coordinates and check if image is movable. For mouse support */
+
     canvasID.addEventListener('mousedown', (e) => {
       e.preventDefault();
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
       var mouseX = Math.floor(e.pageX - canvasRect.x);
       var mouseY = Math.floor(e.pageY - canvasRect.y);
 
-      /*  if ( mousex > ) */
      this.cursorPosOnImage.x = -1*(this.imageCenterPosition.x - mouseX);
      this.cursorPosOnImage.y = this.imageCenterPosition.y - mouseY;
   
-     if ((this.cursorPosOnImage.x <= this.actualSize.width*0.5) &&
-          (this.cursorPosOnImage.x >= this.actualSize.width*-0.5) &&
-          (this.cursorPosOnImage.y <= this.actualSize.height*0.5) &&
-          (this.cursorPosOnImage.y >= this.actualSize.height*-0.5) 
-         ) {
-              this.isImageMovable = true;
-     }
-     this._drawImage(this.framed_img);
+      this.checkImageMovable()
+      this._drawImage(this.framed_img);
 
-   }); 
+    }); 
 
-   canvasID.addEventListener('mousemove', (e) => {
-    e.preventDefault();
-   /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
-   if (this.isImageMovable){
-    var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
+    /* Mouse move: if image is movable, move center position with cursor */
+    canvasID.addEventListener('mousemove', (e) => {
+      e.preventDefault();
+      /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
+      if (this.isImageMovable){
+      var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
 
-    this.imageCenterPosition.x = Math.ceil(e.pageX - canvasRect.x - this.cursorPosOnImage.x);
-    this.imageCenterPosition.y = Math.ceil(e.pageY - canvasRect.y + this.cursorPosOnImage.y);
-
+      this.imageCenterPosition.x = Math.ceil(e.pageX - canvasRect.x - this.cursorPosOnImage.x);
+      this.imageCenterPosition.y = Math.ceil(e.pageY - canvasRect.y + this.cursorPosOnImage.y);
 
       this.ResetCanvas()
       this._drawImage(this.framed_img);
-    }
-  });
+      }
+    });
 
+    /* Touch start: get coordinates and check if image is movable. For touch support*/
     canvasID.addEventListener('touchstart', (e) => {
       e.preventDefault();
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
       var mouseX = Math.floor(e.changedTouches[0].pageX - canvasRect.x);
       var mouseY = Math.floor(e.changedTouches[0].pageY - canvasRect.y);
 
-    this.cursorPosOnImage.x = -1*(this.imageCenterPosition.x - mouseX);
-    this.cursorPosOnImage.y = -1*(this.imageCenterPosition.y - mouseY);
+      this.cursorPosOnImage.x = -1*(this.imageCenterPosition.x - mouseX);
+      this.cursorPosOnImage.y = -1*(this.imageCenterPosition.y - mouseY);
  
-    if ((this.cursorPosOnImage.x <= this.actualSize.width*0.5) &&
-         (this.cursorPosOnImage.x >= this.actualSize.width*-0.5) &&
-         (this.cursorPosOnImage.y <= this.actualSize.height*0.5) &&
-         (this.cursorPosOnImage.y >= this.actualSize.height*-0.5) 
-        ) {
-             this.isImageMovable = true;
-    }
+      this.checkImageMovable();
+    });
 
-      console.log("mouse", mouseX,  mouseY);
-
-   });
-
+    /* Touch move:  if image is movable, move center position with cursor*/
     canvasID.addEventListener('touchmove', (e) => {
       e.preventDefault();
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
@@ -154,27 +139,21 @@ export class AppCoreComponent implements OnInit{
        var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
        this.imageCenterPosition.x = Math.ceil(e.changedTouches[0].pageX - canvasRect.x - this.cursorPosOnImage.x);
        this.imageCenterPosition.y = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImage.y);
-      console.log("mouse", e.changedTouches[0].pageX - canvasRect.x,  e.changedTouches[0].pageY - canvasRect.y);
-      console.log("touch poz", e.changedTouches[0].pageY, canvasRect.y, this.cursorPosOnImage.y);
-      console.log("center poz",  this.imageCenterPosition.y);
-         this.ResetCanvas()
-         this._drawImage(this.framed_img);
-       }
+
+      this.ResetCanvas()
+      this._drawImage(this.framed_img);
+      }
     }, { passive: false });
 
-    /* ending click or touch, chaning movable to unmovable */
+    /* ending click or touch, changing movable to unmovable */
     canvasID.addEventListener('touchend', (e) => {
-      /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
-     this.isImageMovable = false;
-    
+      this.isImageMovable = false;
     });
 
     canvasID.addEventListener('mouseup', (e) => {
-      /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
-    this.isImageMovable = false;
-
+      this.isImageMovable = false;
     });
-   };
+    };
 
    getImageSize(){
     [this.actualSize.width, this.actualSize.height] = [this.framed_img.width, this.framed_img.height].map(item => item * this.imageZoom) ;
@@ -286,6 +265,17 @@ export class AppCoreComponent implements OnInit{
       this._drawImage(this.framed_img);
     }
 
+  }
+
+
+  checkImageMovable(){
+    if ((this.cursorPosOnImage.x <= this.actualSize.width*0.5) &&
+    (this.cursorPosOnImage.x >= this.actualSize.width*-0.5) &&
+    (this.cursorPosOnImage.y <= this.actualSize.height*0.5) &&
+    (this.cursorPosOnImage.y >= this.actualSize.height*-0.5) 
+   ) {
+        this.isImageMovable = true;
+}
   }
 
 
