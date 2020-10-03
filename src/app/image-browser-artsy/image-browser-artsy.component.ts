@@ -46,7 +46,7 @@ export class ImageBrowserARTSYComponent implements OnInit {
 
 
   constructor( private dataService: DataService) {
-    this.searchString = 'Andy Warhol';
+    this.searchString = 'Picasso';
     this.pageNum = 1;
 
   }
@@ -73,19 +73,17 @@ export class ImageBrowserARTSYComponent implements OnInit {
     this.selectedIndex = null;
 
     if (apiQueryNext!= null){
-  
       this.queryUrl_ARTSY = apiQueryNext;
       this.queryUrl_ARTSY_previous = this.imageList_ARTSY._links.self.href;
     }
     else{
       this.queryUrl_ARTSY = "https://api.artsy.net/api/search?q=" + this.searchString;
-
     }
 
-  
     this.dataService.getRemoteDataWithHeader(this.queryUrl_ARTSY, this.TOKEN_ARTSY.token).subscribe(data => {
       this.imageList_ARTSY = data;
       this.queryUrl_ARTSY_next = this.imageList_ARTSY._links.next.href;
+      console.log('artsy', this.imageList_ARTSY);
      return this.imageList_ARTSY ;
   });
 

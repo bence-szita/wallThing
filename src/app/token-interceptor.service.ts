@@ -16,26 +16,13 @@ export class TokenInterceptorService implements HttpInterceptor{
 
    }
 
- /*  intercept(req, next){
-    
-     let dataService = this.injector.get(DataService) ;
-    let tokenizedReq = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${dataService.getToken()}`
-      }
-    })
-    return next.handle(tokenizedReq)
-    return("a")
-  } */
     intercept(req, next){
-    /* 
-    let dataService = this.dataService1.getToken() ;  */
-
+   
     let dataService = this.injector.get(DataService);
     
     dataService.getToken().toPromise().then(data => {
       this.tokendata = data;
-      console.log(this.tokendata);
+      console.log('intercepting', this.tokendata);
     });
     let tokenizedReq = req.clone({
       setHeaders: {
