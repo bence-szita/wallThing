@@ -61,17 +61,14 @@ export class AppCoreComponent implements OnInit{
     this.background_img.src = "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80";
     this.framed_img.src = "https://images.unsplash.com/photo-1557218825-334e575bcc38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEzOTE3OH0";
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
-    const canvasID = document.getElementById('stage');
-    
+    const canvasElement = this.canvas.nativeElement;
+  
 
     this.background_img.onload = () => {
       this.canvasBackground.width = this.background.nativeElement.width;
       this.canvasBackground.height = this.background.nativeElement.height; 
-      
-      console.log('fr width:', this.framed_img.width, 'fr height:', this.framed_img.height)
-
+   
       this.getImageSize();
-
     }
   
 
@@ -88,8 +85,7 @@ export class AppCoreComponent implements OnInit{
     }
     
     /* Mouse move: get coordinates and check if image is movable. For mouse support */
-
-    canvasID.addEventListener('mousedown', (e) => {
+    this.canvas.nativeElement.addEventListener('mousedown', (e) => {
       e.preventDefault();
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
       var mouseX = Math.floor(e.pageX - canvasRect.x);
@@ -104,7 +100,7 @@ export class AppCoreComponent implements OnInit{
     }); 
 
     /* Mouse move: if image is movable, move center position with cursor */
-    canvasID.addEventListener('mousemove', (e) => {
+    canvasElement.addEventListener('mousemove', (e) => {
       e.preventDefault();
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
       if (this.isImageMovable){
@@ -119,7 +115,7 @@ export class AppCoreComponent implements OnInit{
     });
 
     /* Touch start: get coordinates and check if image is movable. For touch support*/
-    canvasID.addEventListener('touchstart', (e) => {
+    canvasElement.addEventListener('touchstart', (e) => {
       e.preventDefault();
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
       var mouseX = Math.floor(e.changedTouches[0].pageX - canvasRect.x);
@@ -132,7 +128,7 @@ export class AppCoreComponent implements OnInit{
     });
 
     /* Touch move:  if image is movable, move center position with cursor*/
-    canvasID.addEventListener('touchmove', (e) => {
+    canvasElement.addEventListener('touchmove', (e) => {
       e.preventDefault();
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
       if (this.isImageMovable){
@@ -146,19 +142,24 @@ export class AppCoreComponent implements OnInit{
     }, { passive: false });
 
     /* ending click or touch, changing movable to unmovable */
-    canvasID.addEventListener('touchend', (e) => {
+    canvasElement.addEventListener('touchend', (e) => {
       this.isImageMovable = false;
     });
 
-    canvasID.addEventListener('mouseup', (e) => {
+    canvasElement.addEventListener('mouseup', (e) => {
       this.isImageMovable = false;
     });
-    };
 
-   getImageSize(){
+
+    canvasElement.addEventListener("wheel", event => {
+      const delta = Math.sign(event.deltaY);
+      this.modifyZoom(-0.05*delta);;
+    });
+
+  };
+
+  getImageSize(){
     [this.actualSize.width, this.actualSize.height] = [this.framed_img.width, this.framed_img.height].map(item => item * this.imageZoom) ;
-
-
   }
 
 
@@ -194,22 +195,16 @@ export class AppCoreComponent implements OnInit{
 
   modifyImage(newImage){
 
-    console.log('new', newImage)
     this.ResetCanvas();
     this.framed_img.src = newImage;
-    console.log("modify width : ", this.framed_img.width*this.imageZoom, "modify height ", this.framed_img.height*this.imageZoom)
-
-     this._drawImage(this.framed_img) 
-
-
+    this._drawImage(this.framed_img) 
   }
+  
   _drawImage(imageToRender){
     this.ResetCanvas();
     this.ctx.drawImage(imageToRender, this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2,
                                       this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2,
                                       this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
-
-    console.log("x: ", this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2, "y: ", this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2)
 
     if (this.borderToggle){
       this._drawFrame();
@@ -275,7 +270,7 @@ export class AppCoreComponent implements OnInit{
     (this.cursorPosOnImage.y >= this.actualSize.height*-0.5) 
    ) {
         this.isImageMovable = true;
-}
+    }
   }
 
 
