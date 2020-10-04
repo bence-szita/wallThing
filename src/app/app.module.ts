@@ -5,8 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppCoreComponent } from './app-core/app-core.component';
 import { ImageBrowserUnsplashComponent } from './image-browser-unsplash/image-browser-unsplash.component';
-import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { DataService } from './services/data.service';
+import { HttpClientModule} from '@angular/common/http';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { BorderPickerComponent } from './border-picker/border-picker.component'
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations'
@@ -44,11 +43,6 @@ import {MatRadioModule} from '@angular/material/radio';
     MatRadioModule
   ],
   providers: [
-   /*  {
-    provide: HTTP_INTERCEPTORS,
-    useClass: TokenInterceptorService,
-    multi: true
-  } */
 ],
   bootstrap: [AppComponent]
 })
