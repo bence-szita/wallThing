@@ -59,7 +59,7 @@ export class AppCoreComponent implements OnInit{
 
   ngOnInit() {
     this.background_img.src = "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80";
-    this.framed_img.src = "https://images.unsplash.com/photo-1557218825-334e575bcc38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjEzOTE3OH0";
+    this.framed_img.src = "";
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
     const canvasElement = this.canvas.nativeElement;
   
@@ -67,7 +67,7 @@ export class AppCoreComponent implements OnInit{
     this.background_img.onload = () => {
       this.canvasBackground.width = this.background.nativeElement.width;
       this.canvasBackground.height = this.background.nativeElement.height; 
-   
+      this.initImagePosition()
       this.getImageSize();
     }
   
@@ -77,7 +77,7 @@ export class AppCoreComponent implements OnInit{
       this.getImageSize();
       this.canvasData.width = this.ctx.canvas.clientWidth;
       this.canvasData.height = this.ctx.canvas.clientHeight;
-
+      
         if (!this.isImageRendered){
           this.initImagePosition()
           this.isImageRendered = true;
@@ -95,6 +95,7 @@ export class AppCoreComponent implements OnInit{
      this.cursorPosOnImage.y = this.imageCenterPosition.y - mouseY;
   
       this.checkImageMovable()
+      console.log('mousedown')
       this._drawImage(this.framed_img);
 
     }); 
@@ -110,6 +111,7 @@ export class AppCoreComponent implements OnInit{
       this.imageCenterPosition.y = Math.ceil(e.pageY - canvasRect.y + this.cursorPosOnImage.y);
 
       this.ResetCanvas()
+      console.log('mousemove')
       this._drawImage(this.framed_img);
       }
     });
@@ -137,6 +139,7 @@ export class AppCoreComponent implements OnInit{
        this.imageCenterPosition.y = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImage.y);
 
       this.ResetCanvas()
+      console.log('touchmove')
       this._drawImage(this.framed_img);
       }
     }, { passive: false });
@@ -165,8 +168,8 @@ export class AppCoreComponent implements OnInit{
 
   /* initiated starting position for image, depending on canvas size */
   initImagePosition(){
-    this.imageCenterPosition.x = this.canvasData.width/2;
-    this.imageCenterPosition.y = this.canvasData.height/2;
+    this.imageCenterPosition.x = this.canvasBackground.width/2;
+    this.imageCenterPosition.y = this.canvasBackground.height/2;
   }
 
   getImagePosition(){
@@ -185,6 +188,7 @@ export class AppCoreComponent implements OnInit{
     this.getImageSize();
    }
   _imgRender(){
+    console.log('modifyimg')
     this._drawImage(this.framed_img)
   }
 
@@ -197,11 +201,14 @@ export class AppCoreComponent implements OnInit{
 
     this.ResetCanvas();
     this.framed_img.src = newImage;
+    console.log('modifyimg')
+
     this._drawImage(this.framed_img) 
   }
   
   _drawImage(imageToRender){
     this.ResetCanvas();
+    console.log('width', this.imageCenterPosition.x)
     this.ctx.drawImage(imageToRender, this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2,
                                       this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2,
                                       this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
@@ -243,7 +250,8 @@ export class AppCoreComponent implements OnInit{
   toggleFrame(e){
     this.borderToggle = e;
     
-    if (this.imageCenterPosition !== undefined){
+    if (this.imageCenterPosition !== undefined && this.isImageRendered){
+      console.log('toggle frame')
       this._drawImage(this.framed_img);
     }
 
@@ -256,7 +264,9 @@ export class AppCoreComponent implements OnInit{
     this.bgColor = e.bgColor;
     this.bgWidth = e.bgWidth;
 
-    if (this.imageCenterPosition !== undefined){
+    if (this.imageCenterPosition !== undefined && this.isImageRendered){
+
+      console.log('modifyimg')
       this._drawImage(this.framed_img);
     }
 

@@ -56,9 +56,8 @@ export class ImageBrowserARTSYComponent implements OnInit {
         this.ARTSY.imageList = data;
         this.ARTSY.queryUrlNext = this.ARTSY.imageList._links.next.href;
   
-    });
-  
-  
+      });
+
     }
   
   
