@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImageBrowserComponent } from './image-browser-unsplash.component';
+import { ImageBrowserUnsplashComponent } from './image-browser-unsplash.component';
 
 describe('ImageBrowserComponent', () => {
-  let component: ImageBrowserComponent;
-  let fixture: ComponentFixture<ImageBrowserComponent>;
+  let component: ImageBrowserUnsplashComponent;
+  let fixture: ComponentFixture<ImageBrowserUnsplashComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImageBrowserComponent ]
+      declarations: [ ImageBrowserUnsplashComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ImageBrowserComponent);
+    fixture = TestBed.createComponent(ImageBrowserUnsplashComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

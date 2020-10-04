@@ -1,17 +1,9 @@
 <div class="browser-header">
     <div class="searchbar">
 
-<!--         <input class="searchInput" type="text" placeholder="search" [(ngModel)]="searchString">
- -->
-       <!--  <mat-form-field appearance="standard">
-          <mat-label>Standard form field</mat-label>
-          <input matInput placeholder="gorilla" class="searchInput" [(ngModel)]="searchString">
-
-        </mat-form-field> -->
-
         <mat-form-field appearance="standard">
           <mat-label>Search</mat-label>
-          <input matInput placeholder="abstract" [(ngModel)]="searchString">
+          <input matInput placeholder="abstract" [(ngModel)]="Unsplash.searchString" (keyup.enter)="update_UNSPLASHGallery()" >
   
         </mat-form-field>
 
@@ -21,7 +13,7 @@
 
 
       <div class="pager-buttons" >
-        <button mat-raised-button color="$mat-black"  [disabled]="pageNum === 1" (click)="previousPage()"> Prev
+        <button mat-raised-button color="$mat-black"  [disabled]="Unsplash.pageNum === 1" (click)="previousPage()"> Prev
         </button>
         <button mat-raised-button color="$mat-black" (click)="nextPage()"> Next
           </button>
@@ -41,7 +33,7 @@
 
 <div class="wrapper-imagebrowser">
 
-  <div *ngFor="let image of this.imageList?.results; let i = index; " class="container-imagebrowser" (click)="changeImage($event); highlightImage(i)">
+  <div *ngFor="let image of Unsplash.imageList?.results; let i = index; " class="container-imagebrowser" (click)="changeImage($event); highlightImage(i)">
     <img src="{{image.urls.small}}" alt="" [ngClass]="{'highlight': selectedIndex === i}" >
   </div>
 

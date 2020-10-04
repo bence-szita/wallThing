@@ -4,7 +4,7 @@
       
     <mat-form-field appearance="standard">
       <mat-label>Search</mat-label>
-      <input matInput placeholder="abstract" [(ngModel)]="ARTSY.searchString">
+      <input matInput placeholder="abstract" [(ngModel)]="ARTSY.searchString" (keyup.enter)="update_ARTSYGallery()" >
     </mat-form-field>
 
 
