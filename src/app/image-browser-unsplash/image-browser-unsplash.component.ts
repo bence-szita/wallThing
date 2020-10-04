@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { DataService} from '../services/data.service';
+import { query} from '../models/query'
 
 @Component({
   selector: 'image-browser-unsplash',
@@ -9,21 +10,22 @@ import { DataService} from '../services/data.service';
 export class ImageBrowserUnsplashComponent implements OnInit {
   @Output() newImage = new EventEmitter<object>();
   @Output() zoomChange = new EventEmitter<number>();
-  Unsplash : {queryUrl: string, queryUrlNext: string, queryUrlPrevious: string, token: any, pageNum: number, searchString: string, imageList: any };
+  Unsplash : query;
   selectedIndex : number;
 
   
   constructor( private dataService: DataService) {
-    this.Unsplash = { queryUrl: "",
+
+    /* Define values for Unsplash queries */
+     this.Unsplash = { queryUrl: "",
                       queryUrlNext: "",
                       queryUrlPrevious: "",
                       token: "mo0EDOofA6crGOy5UROfCFEJjrJvLUcwAQMJg-mqsBQ",
                       pageNum: 1,
                       searchString: 'abstract',
                       imageList: {}
-                    };
+                    }; 
   }
-
 
   ngOnInit() {
     this.update_UNSPLASHGallery(); 
@@ -52,7 +54,7 @@ export class ImageBrowserUnsplashComponent implements OnInit {
     this.fill_UNSPLASHGallery(this.Unsplash.token);
   }
   
-  public highlightImage(_index: number) {
+  highlightImage(_index: number) {
     this.selectedIndex = _index;
   }
   
@@ -61,7 +63,6 @@ export class ImageBrowserUnsplashComponent implements OnInit {
   }
 
   increaseZoom(e){
-
     this.zoomChange.emit(+0.05)
     
   }

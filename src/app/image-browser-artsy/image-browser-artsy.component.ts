@@ -1,8 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { HttpClient} from '@angular/common/http'; 
 import { DataService} from '../services/data.service';
-import { AppCoreComponent } from '../app-core/app-core.component';
-import { map } from "rxjs/operators";
+import { query} from '../models/query'
+
 
 @Component({
   selector: 'app-image-browser-artsy',
@@ -13,7 +12,7 @@ export class ImageBrowserARTSYComponent implements OnInit {
   @Output() newImage = new EventEmitter<object>();
   @Output() zoomChange = new EventEmitter<number>();
 
-  ARTSY : {queryUrl: string, queryUrlNext: string, queryUrlPrevious: string, token: any, pageNum: number, searchString: string, imageList: any };
+  ARTSY : query;
   selectedIndex : number;
   
 
@@ -72,7 +71,7 @@ export class ImageBrowserARTSYComponent implements OnInit {
       this.fill_ARTSYGallery(this.ARTSY.queryUrlPrevious);
     }
     
-    public highlightImage(_index: number) {
+    highlightImage(_index: number) {
       this.selectedIndex = _index;
     }
  
