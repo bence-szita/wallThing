@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ImageBrowserComponent } from './image-browser.component';
+import { ImageBrowserComponent } from './image-browser-unsplash.component';
 
 describe('ImageBrowserComponent', () => {
   let component: ImageBrowserComponent;

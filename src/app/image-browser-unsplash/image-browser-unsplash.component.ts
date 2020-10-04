@@ -4,11 +4,11 @@ import { DataService} from '../services/data.service';
 import { AppCoreComponent } from '../app-core/app-core.component';
 
 @Component({
-  selector: 'app-image-browser',
-  templateUrl: './image-browser.component.html',
-  styleUrls: ['./image-browser.component.css']
+  selector: 'image-browser-unsplash',
+  templateUrl: './image-browser-unsplash.component.html',
+  styleUrls: ['./image-browser-unsplash.component.css']
 })
-export class ImageBrowserComponent implements OnInit {
+export class ImageBrowserUnsplashComponent implements OnInit {
   @Output() newImage = new EventEmitter<object>();
   @Output() zoomChange = new EventEmitter<number>();
 
@@ -73,8 +73,6 @@ export class ImageBrowserComponent implements OnInit {
   
   public highlightImage(_index: number) {
     this.selectedIndex = _index;
-    console.log(_index);
-    console.log(this.selectedIndex);
   }
   
 

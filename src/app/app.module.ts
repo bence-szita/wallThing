@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppCoreComponent } from './app-core/app-core.component';
-import { ImageBrowserComponent } from './image-browser/image-browser.component';
+import { ImageBrowserUnsplashComponent } from './image-browser-unsplash/image-browser-unsplash.component';
 import { HttpClientModule, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DataService } from './services/data.service';
 import { ImageUploadComponent } from './image-upload/image-upload.component';
@@ -25,7 +25,7 @@ import {MatRadioModule} from '@angular/material/radio';
   declarations: [
     AppComponent,
     AppCoreComponent,
-    ImageBrowserComponent,
+    ImageBrowserUnsplashComponent,
     ImageUploadComponent,
     BorderPickerComponent,
     HeaderComponent,
