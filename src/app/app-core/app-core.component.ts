@@ -95,7 +95,6 @@ export class AppCoreComponent implements OnInit{
      this.cursorPosOnImage.y = this.imageCenterPosition.y - mouseY;
   
       this.checkImageMovable()
-      console.log('mousedown')
       this._drawImage(this.framed_img);
 
     }); 
@@ -111,7 +110,6 @@ export class AppCoreComponent implements OnInit{
       this.imageCenterPosition.y = Math.ceil(e.pageY - canvasRect.y + this.cursorPosOnImage.y);
 
       this.ResetCanvas()
-      console.log('mousemove')
       this._drawImage(this.framed_img);
       }
     });
@@ -139,7 +137,6 @@ export class AppCoreComponent implements OnInit{
        this.imageCenterPosition.y = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImage.y);
 
       this.ResetCanvas()
-      console.log('touchmove')
       this._drawImage(this.framed_img);
       }
     }, { passive: false });
@@ -188,7 +185,6 @@ export class AppCoreComponent implements OnInit{
     this.getImageSize();
    }
   _imgRender(){
-    console.log('modifyimg')
     this._drawImage(this.framed_img)
   }
 
@@ -201,14 +197,12 @@ export class AppCoreComponent implements OnInit{
 
     this.ResetCanvas();
     this.framed_img.src = newImage;
-    console.log('modifyimg')
 
     this._drawImage(this.framed_img) 
   }
   
   _drawImage(imageToRender){
     this.ResetCanvas();
-    console.log('width', this.imageCenterPosition.x)
     this.ctx.drawImage(imageToRender, this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2,
                                       this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2,
                                       this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
@@ -265,8 +259,6 @@ export class AppCoreComponent implements OnInit{
     this.bgWidth = e.bgWidth;
 
     if (this.imageCenterPosition !== undefined && this.isImageRendered){
-
-      console.log('modifyimg')
       this._drawImage(this.framed_img);
     }
 
