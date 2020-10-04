@@ -13,7 +13,7 @@
 
  
       <div class="pager-buttons" >
-        <button mat-raised-button color="$mat-black"  [disabled]="pageNum === 1" (click)="previousPage()"> Prev
+        <button mat-raised-button color="$mat-black"  [disabled]="ARTSY.pageNum === 1" (click)="previousPage()"> Prev
         </button>
         <button mat-raised-button color="$mat-black" (click)="nextPage()"> Next
           </button>
@@ -32,9 +32,9 @@
 </div>
 
 
-<div class="wrapper-imagebrowser">
+<div class="wrapper-imagebrowser" >
 
-  <div *ngFor="let image of this.imageList_ARTSY?._embedded.results; let i = index; " class="container-imagebrowser" (click)="changeImage($event); highlightImage(i)">
+  <div *ngFor="let image of ARTSY.imageList._embedded?.results; let i = index; " class="container-imagebrowser" (click)="changeImage($event); highlightImage(i)">
     
     <!-- only display image if link exists -->
     <div *ngIf="image._links.thumbnail.href !== '/assets/shared/missing_image.png'" class="max-height">

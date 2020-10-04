@@ -13,79 +13,77 @@ export class ImageBrowserARTSYComponent implements OnInit {
   @Output() newImage = new EventEmitter<object>();
   @Output() zoomChange = new EventEmitter<number>();
 
-  APIKEY_UNSPLASH : string;
-  url_UNSPLASH : string;
-  queryUrl_UNSPLASH : string;
+  ARTSY : {queryUrl: string, queryUrlNext: string, queryUrlPrevious: string, token: any, pageNum: number, searchString: string, imageList: any };
+
   imageList: any;
-  private appCore: AppCoreComponent;
   searchString : string;
-  pageNum : number;
+  
   selectedIndex : number;
   imageList_ARTSY: any;
 
-  TOKEN_ARTSY : any;
-  queryUrl_ARTSY : string;
-
-  queryUrl_ARTSY_next : string;
-  queryUrl_ARTSY_previous : string;
-
-
-  changeImage(e){
-    
-   /* replaces square with medium for higher quality image */
-    this.newImage.emit(e.target.src)
-  }
-
-  increaseZoom(e){
-    this.zoomChange.emit(+0.05)
-    
-  }
-
-  decreaseZoom(e){
-    this.zoomChange.emit(-0.05);
-  }
+  
 
 
   constructor( private dataService: DataService) {
-    this.searchString = 'Picasso';
-    this.pageNum = 1;
 
+    /* Define values for ARTSY queries */
+    this.ARTSY = {  queryUrl: "",
+                    queryUrlNext: "",
+                    queryUrlPrevious: "",
+                    token: null,
+                    pageNum: 1,
+                    searchString: 'Picasso',
+                    imageList: {}
+              }
   }
 
 
-  ngOnInit() {
+  async ngOnInit() {
 
-     this.dataService.getToken().subscribe(data => {
-      this.TOKEN_ARTSY = data;
+    this.dataService.getToken().subscribe(data => {
+      this.ARTSY.token = data;
       this.update_ARTSYGallery();
     })  
 
  
   }
  
-  
+  changeImage(e){
+    
+    /* replaces square with medium for higher quality image */
+     this.newImage.emit(e.target.src)
+   }
+ 
+   increaseZoom(e){
+     this.zoomChange.emit(+0.05)
+     
+   }
+ 
+   decreaseZoom(e){
+     this.zoomChange.emit(-0.05);
+   }
+ 
 
   update_ARTSYGallery(){
-    return this.fill_ARTSYGallery( this.pageNum , this.searchString, this.TOKEN_ARTSY, null);
+    this.fill_ARTSYGallery( null);
   }
 
     /* conditional argument for next and previous querys */
-  fill_ARTSYGallery( _page, _searchinput, _apikey, apiQueryNext ){
+  fill_ARTSYGallery( apiQueryNext ){
     this.selectedIndex = null;
 
     if (apiQueryNext!= null){
-      this.queryUrl_ARTSY = apiQueryNext;
-      this.queryUrl_ARTSY_previous = this.imageList_ARTSY._links.self.href;
+      this.ARTSY.queryUrl = apiQueryNext;
+      this.ARTSY.queryUrlPrevious =  this.ARTSY.imageList._links.self.href;
     }
     else{
-      this.queryUrl_ARTSY = "https://api.artsy.net/api/search?q=" + this.searchString;
+      this.ARTSY.queryUrl = "https://api.artsy.net/api/search?q=" + this.ARTSY.searchString;
     }
 
-    this.dataService.getRemoteDataWithHeader(this.queryUrl_ARTSY, this.TOKEN_ARTSY.token).subscribe(data => {
-      this.imageList_ARTSY = data;
-      this.queryUrl_ARTSY_next = this.imageList_ARTSY._links.next.href;
-      console.log('artsy', this.imageList_ARTSY);
-     return this.imageList_ARTSY ;
+    this.dataService.getRemoteDataWithHeader(this.ARTSY.queryUrl, this.ARTSY.token.token).subscribe(data => {
+      this.ARTSY.imageList = data;
+      this.ARTSY.queryUrlNext = this.ARTSY.imageList._links.next.href;
+
   });
 
 
@@ -93,21 +91,18 @@ export class ImageBrowserARTSYComponent implements OnInit {
 
   get_ARTSYToken(){
     this.dataService.getToken().subscribe(data => {
-      this.TOKEN_ARTSY = data;
-
-  });
-
-    return this.TOKEN_ARTSY;
+      return data;
+    });
   }
 
 
   nextPage(){
-    this.pageNum += 1;
-    this.fill_ARTSYGallery( this.pageNum, this.searchString, this.APIKEY_UNSPLASH, this.queryUrl_ARTSY_next);
+    this.ARTSY.pageNum += 1;
+    this.fill_ARTSYGallery( this.ARTSY.queryUrlNext);
   }
   previousPage(){
-    this.pageNum -= 1;
-    this.fill_ARTSYGallery( this.pageNum, this.searchString, this.APIKEY_UNSPLASH, this.queryUrl_ARTSY_next);
+    this.ARTSY.pageNum -= 1;
+    this.fill_ARTSYGallery(this.ARTSY.queryUrlPrevious);
   }
   
   public highlightImage(_index: number) {
