@@ -14,15 +14,8 @@ export class ImageBrowserARTSYComponent implements OnInit {
   @Output() zoomChange = new EventEmitter<number>();
 
   ARTSY : {queryUrl: string, queryUrlNext: string, queryUrlPrevious: string, token: any, pageNum: number, searchString: string, imageList: any };
-
-  imageList: any;
-  searchString : string;
-  
   selectedIndex : number;
-  imageList_ARTSY: any;
-
   
-
 
   constructor( private dataService: DataService) {
 
@@ -47,6 +40,41 @@ export class ImageBrowserARTSYComponent implements OnInit {
 
  
   }
+
+    /* conditional argument for next and previous querys */
+    fill_ARTSYGallery( apiQueryNext ){
+      this.selectedIndex = null;
+  
+      if (apiQueryNext!= null){
+        this.ARTSY.queryUrl = apiQueryNext;
+        this.ARTSY.queryUrlPrevious =  this.ARTSY.imageList._links.self.href;
+      }
+      else{
+        this.ARTSY.queryUrl = "https://api.artsy.net/api/search?q=" + this.ARTSY.searchString;
+      }
+  
+      this.dataService.getRemoteDataWithHeader(this.ARTSY.queryUrl, this.ARTSY.token.token).subscribe(data => {
+        this.ARTSY.imageList = data;
+        this.ARTSY.queryUrlNext = this.ARTSY.imageList._links.next.href;
+  
+    });
+  
+  
+    }
+  
+  
+    nextPage(){
+      this.ARTSY.pageNum += 1;
+      this.fill_ARTSYGallery( this.ARTSY.queryUrlNext);
+    }
+    previousPage(){
+      this.ARTSY.pageNum -= 1;
+      this.fill_ARTSYGallery(this.ARTSY.queryUrlPrevious);
+    }
+    
+    public highlightImage(_index: number) {
+      this.selectedIndex = _index;
+    }
  
   changeImage(e){
     
@@ -68,48 +96,7 @@ export class ImageBrowserARTSYComponent implements OnInit {
     this.fill_ARTSYGallery( null);
   }
 
-    /* conditional argument for next and previous querys */
-  fill_ARTSYGallery( apiQueryNext ){
-    this.selectedIndex = null;
-
-    if (apiQueryNext!= null){
-      this.ARTSY.queryUrl = apiQueryNext;
-      this.ARTSY.queryUrlPrevious =  this.ARTSY.imageList._links.self.href;
-    }
-    else{
-      this.ARTSY.queryUrl = "https://api.artsy.net/api/search?q=" + this.ARTSY.searchString;
-    }
-
-    this.dataService.getRemoteDataWithHeader(this.ARTSY.queryUrl, this.ARTSY.token.token).subscribe(data => {
-      this.ARTSY.imageList = data;
-      this.ARTSY.queryUrlNext = this.ARTSY.imageList._links.next.href;
-
-  });
-
-
-  }
-
-  get_ARTSYToken(){
-    this.dataService.getToken().subscribe(data => {
-      return data;
-    });
-  }
-
-
-  nextPage(){
-    this.ARTSY.pageNum += 1;
-    this.fill_ARTSYGallery( this.ARTSY.queryUrlNext);
-  }
-  previousPage(){
-    this.ARTSY.pageNum -= 1;
-    this.fill_ARTSYGallery(this.ARTSY.queryUrlPrevious);
-  }
   
-  public highlightImage(_index: number) {
-    this.selectedIndex = _index;
-    console.log(_index);
-    console.log(this.selectedIndex);
-  }
   
 
 }
