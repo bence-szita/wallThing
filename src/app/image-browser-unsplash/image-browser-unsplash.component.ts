@@ -1,7 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { HttpClient} from '@angular/common/http'; 
 import { DataService} from '../services/data.service';
-import { AppCoreComponent } from '../app-core/app-core.component';
 
 @Component({
   selector: 'image-browser-unsplash',
