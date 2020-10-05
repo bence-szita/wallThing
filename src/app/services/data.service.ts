@@ -22,19 +22,37 @@ export class DataService {
 
 
   getRemoteData(url: string){
-    return this.http.get(url)
+
+    try {
+      return this.http.get(url)
+    } catch (err) {
+     console.log(err)
+    
+    }
   }
 
   getRemoteDataWithHeader(url: string, _authToken: any){
 
     let headers = new HttpHeaders();
     headers = headers.append(`X-Xapp-Token`, `${_authToken}`);
-    return this.http.get(url,{headers})
+    try {
+      return this.http.get('url',{headers})
+    } catch (err) {
+    console.log(err)
+    }
+    
   }
+
+
 
   getToken(){
 
+      try {
       return this.http.post(this.tokenquery,'');
+      } catch (err) {
+      console.log(err)
+      }
+
   }
 
 }
