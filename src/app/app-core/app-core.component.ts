@@ -90,10 +90,8 @@ export class AppCoreComponent implements OnInit{
       var mouseX = Math.floor(e.pageX - canvasRect.x);
       var mouseY = Math.floor(e.pageY - canvasRect.y);
 
-
-     this.cursorPosOnImage.x = -1*(this.imageCenterPosition.x - mouseX);
+     this.cursorPosOnImage.x = this.imageCenterPosition.x - mouseX;
      this.cursorPosOnImage.y = this.imageCenterPosition.y - mouseY;
-  
       this.checkImageMovable()
 
     }); 
@@ -105,7 +103,7 @@ export class AppCoreComponent implements OnInit{
       if (this.isImageMovable){
       var canvasRect = this.ctx.canvas.getBoundingClientRect() /* to refactor: add resize element observer*/
 
-      this.imageCenterPosition.x = Math.ceil(e.pageX - canvasRect.x - this.cursorPosOnImage.x);
+      this.imageCenterPosition.x = Math.ceil(e.pageX - canvasRect.x + this.cursorPosOnImage.x);
       this.imageCenterPosition.y = Math.ceil(e.pageY - canvasRect.y + this.cursorPosOnImage.y);
 
       this.ResetCanvas()
@@ -120,8 +118,8 @@ export class AppCoreComponent implements OnInit{
       var mouseX = Math.floor(e.changedTouches[0].pageX - canvasRect.x);
       var mouseY = Math.floor(e.changedTouches[0].pageY - canvasRect.y);
 
-      this.cursorPosOnImage.x = -1*(this.imageCenterPosition.x - mouseX);
-      this.cursorPosOnImage.y = -1*(this.imageCenterPosition.y - mouseY);
+      this.cursorPosOnImage.x = (this.imageCenterPosition.x - mouseX);
+      this.cursorPosOnImage.y = (this.imageCenterPosition.y - mouseY);
  
       this.checkImageMovable();
     });
@@ -132,8 +130,8 @@ export class AppCoreComponent implements OnInit{
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
       if (this.isImageMovable){
        var canvasRect = this.ctx.canvas.getBoundingClientRect() 
-       this.imageCenterPosition.x = Math.ceil(e.changedTouches[0].pageX - canvasRect.x - this.cursorPosOnImage.x);
-       this.imageCenterPosition.y = Math.ceil(e.changedTouches[0].pageY - canvasRect.y - this.cursorPosOnImage.y);
+       this.imageCenterPosition.x = Math.ceil(e.changedTouches[0].pageX - canvasRect.x + this.cursorPosOnImage.x);
+       this.imageCenterPosition.y = Math.ceil(e.changedTouches[0].pageY - canvasRect.y + this.cursorPosOnImage.y);
 
       this.ResetCanvas()
       this._drawImage(this.framed_img);
