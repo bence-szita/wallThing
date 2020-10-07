@@ -61,7 +61,6 @@ export class AppCoreComponent implements OnInit{
     this.background_img.src = "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80";
     this.framed_img.src = "";
     this.ctx = (this.canvas.nativeElement as HTMLCanvasElement).getContext('2d');
-    const canvasElement = this.canvas.nativeElement;
   
 
     this.background_img.onload = () => {
@@ -100,7 +99,7 @@ export class AppCoreComponent implements OnInit{
     }); 
 
     /* Mouse move: if image is movable, move center position with cursor */
-    canvasElement.addEventListener('mousemove', (e) => {
+     this.canvas.nativeElement.addEventListener('mousemove', (e) => {
       e.preventDefault();
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
       if (this.isImageMovable){
@@ -115,7 +114,7 @@ export class AppCoreComponent implements OnInit{
     });
 
     /* Touch start: get coordinates and check if image is movable. For touch support*/
-    canvasElement.addEventListener('touchstart', (e) => {
+     this.canvas.nativeElement.addEventListener('touchstart', (e) => {
       e.preventDefault();
       var canvasRect = this.ctx.canvas.getBoundingClientRect()
       var mouseX = Math.floor(e.changedTouches[0].pageX - canvasRect.x);
@@ -128,7 +127,7 @@ export class AppCoreComponent implements OnInit{
     });
 
     /* Touch move:  if image is movable, move center position with cursor*/
-    canvasElement.addEventListener('touchmove', (e) => {
+     this.canvas.nativeElement.addEventListener('touchmove', (e) => {
       e.preventDefault();
       /* getting coordinates of canvas box and gathering mouse coordinate relative to the canvas */
       if (this.isImageMovable){
@@ -142,16 +141,16 @@ export class AppCoreComponent implements OnInit{
     }, { passive: false });
 
     /* ending click or touch, changing movable to unmovable */
-    canvasElement.addEventListener('touchend', (e) => {
+     this.canvas.nativeElement.addEventListener('touchend', (e) => {
       this.isImageMovable = false;
     });
 
-    canvasElement.addEventListener('mouseup', (e) => {
+     this.canvas.nativeElement.addEventListener('mouseup', (e) => {
       this.isImageMovable = false;
     });
 
 
-    canvasElement.addEventListener("wheel", event => {
+     this.canvas.nativeElement.addEventListener("wheel", event => {
       const delta = Math.sign(event.deltaY);
       this.modifyZoom(-0.05*delta);;
     });
@@ -245,7 +244,6 @@ export class AppCoreComponent implements OnInit{
     this.borderToggle = e;
     
     if (this.imageCenterPosition !== undefined && this.isImageRendered){
-      console.log('toggle frame')
       this._drawImage(this.framed_img);
     }
 
