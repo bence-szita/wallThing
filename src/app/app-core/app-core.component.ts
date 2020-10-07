@@ -67,13 +67,11 @@ export class AppCoreComponent implements OnInit{
       this.canvasBackground.width = this.background.nativeElement.width;
       this.canvasBackground.height = this.background.nativeElement.height; 
       this.initImagePosition()
-      this.getImageSize();
     }
   
 
     this.framed_img.onload = () => {
      
-      this.getImageSize();
       this.canvasData.width = this.ctx.canvas.clientWidth;
       this.canvasData.height = this.ctx.canvas.clientHeight;
       
@@ -181,6 +179,7 @@ export class AppCoreComponent implements OnInit{
     this._imgRender();
     this.getImageSize();
    }
+   
   _imgRender(){
     this._drawImage(this.framed_img)
   }
@@ -200,9 +199,10 @@ export class AppCoreComponent implements OnInit{
   
   _drawImage(imageToRender){
     this.ResetCanvas();
-    this.ctx.drawImage(imageToRender, this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2,
-                                      this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2,
-                                      this.framed_img.width*this.imageZoom, this.framed_img.height*this.imageZoom);
+    this.getImageSize();
+    this.ctx.drawImage(imageToRender, this.imageCenterPosition.x-(this.actualSize.width)/2,
+                                      this.imageCenterPosition.y-(this.actualSize.height)/2,
+                                      this.actualSize.width, this.actualSize.height);
 
     if (this.borderToggle){
       this._drawFrame();
@@ -217,9 +217,9 @@ export class AppCoreComponent implements OnInit{
     /* draw frame background */
     this.ctx.beginPath();
     if (Math.ceil((this.bgWidth/2))){
-      this.ctx.rect(this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2-Math.ceil((this.bgWidth/2)),
-                  this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2-Math.ceil((this.bgWidth/2)),
-                  this.framed_img.width*this.imageZoom+this.bgWidth, this.framed_img.height*this.imageZoom+this.bgWidth);
+      this.ctx.rect(this.imageCenterPosition.x-(this.actualSize.width)/2-Math.ceil((this.bgWidth/2)),
+                  this.imageCenterPosition.y-(this.actualSize.height)/2-Math.ceil((this.bgWidth/2)),
+                  this.actualSize.width+this.bgWidth, this.actualSize.height+this.bgWidth);
     };
     this.ctx.lineWidth = this.bgWidth; 
     this.ctx.strokeStyle = this.bgColor;
@@ -228,9 +228,9 @@ export class AppCoreComponent implements OnInit{
      /* draw background background */
     this.ctx.beginPath();
     if (Math.ceil((this.frameWidth/2))){
-    this.ctx.rect(this.imageCenterPosition.x-(this.framed_img.width*this.imageZoom)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
-                  this.imageCenterPosition.y-(this.framed_img.height*this.imageZoom)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
-                  this.framed_img.width*this.imageZoom+this.bgWidth*2+this.frameWidth, this.framed_img.height*this.imageZoom+this.bgWidth*2+this.frameWidth);
+    this.ctx.rect(this.imageCenterPosition.x-(this.actualSize.width)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
+                  this.imageCenterPosition.y-(this.actualSize.height)/2-this.bgWidth-Math.ceil((this.frameWidth/2)),
+                  this.actualSize.width+this.bgWidth*2+this.frameWidth, this.actualSize.height+this.bgWidth*2+this.frameWidth);
     };              
     this.ctx.lineWidth = this.frameWidth; 
     this.ctx.strokeStyle = this.frameColor;
